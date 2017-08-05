@@ -356,17 +356,13 @@
 <p>介绍Kubernetes项目中面向Etcd的对象控制器、工作队列、自定义资源、容器运行时接口等一系列基于Golang的编程范式，同时讲解开发者如何使用这些范式来“无损”地扩展Kubernetes核心能力的最佳实践。</p>
 </blockquote>
 <ul>
-<li><p>Kubernetes</p>
-<p>  Kubernetes作为Docker生态圈中重要一员，是Google多年大规模容器管理技术的开源版本，是产线实践经验的最佳表现[G1] 。<br>面向 API ”OO“ Programming</p>
+<li><p>Kubernetes<br>  Kubernetes作为Docker生态圈中重要一员，是Google多年大规模容器管理技术的开源版本，是产线实践经验的最佳表现[G1] 。<br>面向 API ”OO“ Programming</p>
 </li>
-<li><p>etcd</p>
-<p>  可用强一致性的服务发现存储仓库  </p>
+<li><p>etcd<br>  可用强一致性的服务发现存储仓库  </p>
 </li>
-<li><p>gRPC</p>
-<p>  是一个高性能、通用的开源RPC框架，其由Google主要面向移动应用开发并基于HTTP/2协议标准而设计，基于ProtoBuf(Protocol Buffers)序列化协议开发，且支持众多开发语言。</p>
+<li><p>gRPC<br>  是一个高性能、通用的开源RPC框架，其由Google主要面向移动应用开发并基于HTTP/2协议标准而设计，基于ProtoBuf(Protocol Buffers)序列化协议开发，且支持众多开发语言。</p>
 </li>
-<li><p>RPC</p>
-<p>  远程过程调用（英语：Remote Procedure Call，縮寫為RPC）是一个计算机通信协议。 该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程。</p>
+<li><p>RPC<br>  远程过程调用（英语：Remote Procedure Call，縮寫為RPC）是一个计算机通信协议。 该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程。</p>
 </li>
 </ul>
 <h2 id="基于Mesos的容器调度框架"><a href="#基于Mesos的容器调度框架" class="headerlink" title="基于Mesos的容器调度框架"></a>基于Mesos的容器调度框架</h2><h3 id="黄励博-又拍云"><a href="#黄励博-又拍云" class="headerlink" title="黄励博:又拍云"></a>黄励博:又拍云</h3><blockquote>
@@ -379,6 +375,86 @@
 <h2 id="Go使用gRPC-http打造高性能微服务"><a href="#Go使用gRPC-http打造高性能微服务" class="headerlink" title="Go使用gRPC+http打造高性能微服务"></a>Go使用gRPC+http打造高性能微服务</h2><h3 id="谢孟军：GoCN"><a href="#谢孟军：GoCN" class="headerlink" title="谢孟军：GoCN"></a>谢孟军：GoCN</h3><blockquote>
 <p>GRPC已成为互联网最佳的通讯标准，如何打造一个高性能的微服务？</p>
 </blockquote>
+<h3 id="微服务-MicroServices"><a href="#微服务-MicroServices" class="headerlink" title="微服务 MicroServices"></a>微服务 MicroServices</h3><blockquote>
+<p>小、独立服务<br>微服务可以按照功能来划分，或披萨理论，开发到部署3-4个人</p>
+</blockquote>
+<h3 id="gRPC"><a href="#gRPC" class="headerlink" title="gRPC"></a>gRPC</h3><blockquote>
+<p>基于HTTP/2 POST protobuf</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>JSON</th>
+<th>protobuf</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>plaintext</td>
+<td>binary</td>
+</tr>
+<tr>
+<td>human readable</td>
+<td>machine readable</td>
+</tr>
+<tr>
+<td>repetitive</td>
+<td>compressed</td>
+</tr>
+<tr>
+<td>fast (de)serialization</td>
+<td>faster (de) serialization</td>
+</tr>
+<tr>
+<td>Everything supports it</td>
+<td>limited support</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>HTTP/1.1</th>
+<th>HTTP/2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>plaintext</td>
+<td>binary</td>
+</tr>
+<tr>
+<td>no pipelining</td>
+<td>native pipelining</td>
+</tr>
+<tr>
+<td>new connection per request</td>
+<td>persistent TCP</td>
+</tr>
+<tr>
+<td>repetitive</td>
+<td>compressed</td>
+</tr>
+<tr>
+<td>polling</td>
+<td>streaming</td>
+</tr>
+<tr>
+<td>Non-secure by default</td>
+<td>TLS by default</td>
+</tr>
+<tr>
+<td>Everything supports it</td>
+<td>limited support</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>REST<br>  REpresentational State Transfer，全称是 Resource Representational State Transfer：通俗来讲就是：资源在网络中以某种表现形式进行状态转移。<br>  URL定位资源，用HTTP动词（GET,POST,DELETE,DETC）描述操作。</li>
+</ul>
+<h3 id="如何使用gRPC-http打造微服务"><a href="#如何使用gRPC-http打造微服务" class="headerlink" title="如何使用gRPC+http打造微服务"></a>如何使用gRPC+http打造微服务</h3><h3 id="为什么GO适合做微服务"><a href="#为什么GO适合做微服务" class="headerlink" title="为什么GO适合做微服务"></a>为什么GO适合做微服务</h3><ul>
+<li>小</li>
+</ul>
 
           
         
