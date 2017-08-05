@@ -1546,7 +1546,7 @@ TopoJSON主要通过以下方式减小文件的体积。
 
 介绍完GeoJSON与TopoJSON，来讲一讲我在工作中遇到的需求。
 
-![](20161212-地图数据中的GeoJson与TopoJson/1.png)
+![](/20161212-地图数据中的GeoJson与TopoJson/1.png)
 如图所示：当选中了地图中的两个相连的区域时，区域公共边依然会显示出来，需求是连续的区域不显示公共边。但由于GeoJSON中的边缘信息时分别存储于每一个Geometry中，所以想要找到所有重叠的公共点有很高的时间复杂度，因此考虑将GeoJSON转换为TopoJSON处理。
 
 GeoJSON与TopoJSON的互相转换可以通过TopoJSON提供的转换器实现：
