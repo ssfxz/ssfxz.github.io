@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="NEV,DataVisualization,map," />
+  <meta name="keywords" content="DataVisualization,map," />
 
 
 
@@ -95,14 +95,14 @@
 
 
 <meta name="description" content="地图数据中的GeoJson与TopoJson 近期工作中遇到了图表库地图数据的合并以及压缩的需求，需要将目前图表库中目前使用的GeoJSON数据格式替换为TopoJSON，现在将GeoJSON与TopoJSON的异同进行整理如下。  地图图表是数据可视化中的一种常用的图表类型，主要用于表达基于地理位置的区域性数据。 目前常用于表示地理信息的数据结构主要有两种格式：GeoJSON 与 TopoJSO">
-<meta name="keywords" content="NEV,DataVisualization,map">
+<meta name="keywords" content="DataVisualization,map">
 <meta property="og:type" content="article">
 <meta property="og:title" content="地图数据中的GeoJson与TopoJson">
 <meta property="og:url" content="http://yoursite.com/2016/12/12/20161212-地图数据中的GeoJson与TopoJson/index.html">
 <meta property="og:site_name" content="LiuY&#39;s TechBlog">
 <meta property="og:description" content="地图数据中的GeoJson与TopoJson 近期工作中遇到了图表库地图数据的合并以及压缩的需求，需要将目前图表库中目前使用的GeoJSON数据格式替换为TopoJSON，现在将GeoJSON与TopoJSON的异同进行整理如下。  地图图表是数据可视化中的一种常用的图表类型，主要用于表达基于地理位置的区域性数据。 目前常用于表示地理信息的数据结构主要有两种格式：GeoJSON 与 TopoJSO">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-08-05T17:41:30.000Z">
+<meta property="og:updated_time" content="2017-08-05T18:11:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="地图数据中的GeoJson与TopoJson">
 <meta name="twitter:description" content="地图数据中的GeoJson与TopoJson 近期工作中遇到了图表库地图数据的合并以及压缩的需求，需要将目前图表库中目前使用的GeoJSON数据格式替换为TopoJSON，现在将GeoJSON与TopoJSON的异同进行整理如下。  地图图表是数据可视化中的一种常用的图表类型，主要用于表达基于地理位置的区域性数据。 目前常用于表示地理信息的数据结构主要有两种格式：GeoJSON 与 TopoJSO">
@@ -394,7 +394,7 @@ TopoJSON主要通过以下方式减小文件的体积。
 
 介绍完GeoJSON与TopoJSON，来讲一讲我在工作中遇到的需求。
 
-![](/20161212-地图数据中的GeoJson与TopoJson/1.png)
+![](20161212-地图数据中的GeoJson与TopoJson/1.png)
 如图所示：当选中了地图中的两个相连的区域时，区域公共边依然会显示出来，需求是连续的区域不显示公共边。但由于GeoJSON中的边缘信息时分别存储于每一个Geometry中，所以想要找到所有重叠的公共点有很高的时间复杂度，因此考虑将GeoJSON转换为TopoJSON处理。
 
 GeoJSON与TopoJSON的互相转换可以通过TopoJSON提供的转换器实现：
@@ -407,25 +407,62 @@ GeoJSON与TopoJSON的互相转换可以通过TopoJSON提供的转换器实现：
 TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函数用于区域合并，因此使用TopoJSON可以轻松实现以上需求，同时还能减小地图数据文件的体积。  
 
 示例代码如下：
-</code></pre><p>&lt;!DOCTYPE html&gt;</p>
-<p><meta charset="utf-8"></p>
-<style>
 
-<p>.state {<br>  fill: #DDD;<br>  stroke: #FFF;<br>}</p>
-<p>.state.selected {<br>  fill: #0CF;<br>  stroke: #000;<br>}</p>
-<p></style><p></p>
-<p><body></body></p>
-<p><script src="https://d3js.org/d3.v3.js"></script></p>
-<p><script src="https://d3js.org/topojson.v2.js"></script></p>
-<p><script><br> var width = 960,<br>  height = 600;</p>
-<p>  var projection = d3.geo.mercator()<br>    .translate([-width / 1.2, height * 1.2])<br>    .scale((width) / 1.5);</p>
-<p>  var path = d3.geo.path()<br>   .projection(projection);</p>
-<p>  var svg = d3.select(“body”).append(“svg”)<br>    .attr(“width”, width)<br>    .attr(“height”, height);</p>
-<p>  var selected = d3.set([<br>  “CHN<em>西藏”,<br>  “CHN</em>新疆”,<br>  “CHN_青海”<br>  ]);</p>
-<p>  d3.json(“out.json”, function(error, china) {<br>  if (error) throw error;</p>
-<p>  var rr = svg.append(“path”)<br>      .datum(topojson.feature(china, china.objects.geo))<br>      .attr(“class”, “state”);<br>      rr.attr(“d”, path);</p>
-<p>  svg.append(“path”)<br>      .datum(topojson.merge(china, china.objects.geo.geometries.filter(function(d) { return selected.has(d.properties.id); })))<br>      .attr(“class”, “state selected”)<br>      .attr(“d”, path);<br>});<br></script><br>```</p>
-<p>##Link<br><a href="http://geojson.org/geojson-spec.html" target="_blank" rel="external">geojson-spec</a><br><a href="https://github.com/topojson/topojson-specification/blob/master/README.md" target="_blank" rel="external">topojson-specification</a><br><a href="http://mapshaper.org/" target="_blank" rel="external">简化、转换 GeoJSON 和 TopoJSON</a></p>
+``` HTML
+&lt;!DOCTYPE html&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;style&gt;
+
+.state {
+  fill: #DDD;
+  stroke: #FFF;
+}
+
+.state.selected {
+  fill: #0CF;
+  stroke: #000;
+}
+
+&lt;/style&gt;
+&lt;body&gt;
+&lt;script src=&quot;https://d3js.org/d3.v3.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://d3js.org/topojson.v2.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+ var width = 960,
+  height = 600;
+
+  var projection = d3.geo.mercator()
+    .translate([-width / 1.2, height * 1.2])
+    .scale((width) / 1.5);
+
+  var path = d3.geo.path()
+   .projection(projection);
+
+  var svg = d3.select(&quot;body&quot;).append(&quot;svg&quot;)
+    .attr(&quot;width&quot;, width)
+    .attr(&quot;height&quot;, height);
+
+  var selected = d3.set([
+  &quot;CHN_西藏&quot;,
+  &quot;CHN_新疆&quot;,
+  &quot;CHN_青海&quot;
+  ]);
+
+  d3.json(&quot;out.json&quot;, function(error, china) {
+  if (error) throw error;
+
+  var rr = svg.append(&quot;path&quot;)
+      .datum(topojson.feature(china, china.objects.geo))
+      .attr(&quot;class&quot;, &quot;state&quot;);
+      rr.attr(&quot;d&quot;, path);
+
+  svg.append(&quot;path&quot;)
+      .datum(topojson.merge(china, china.objects.geo.geometries.filter(function(d) { return selected.has(d.properties.id); })))
+      .attr(&quot;class&quot;, &quot;state selected&quot;)
+      .attr(&quot;d&quot;, path);
+});
+&lt;/script&gt;
+</code></pre><h2 id="Link"><a href="#Link" class="headerlink" title="Link"></a>Link</h2><p><a href="http://geojson.org/geojson-spec.html" target="_blank" rel="external">geojson-spec</a><br><a href="https://github.com/topojson/topojson-specification/blob/master/README.md" target="_blank" rel="external">topojson-specification</a><br><a href="http://mapshaper.org/" target="_blank" rel="external">简化、转换 GeoJSON 和 TopoJSON</a></p>
 
       
     </div>
@@ -442,8 +479,6 @@ TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函�
     <footer class="post-footer">
       
         <div class="post-tags">
-          
-            <a href="/tags/NEV/" rel="tag"># NEV</a>
           
             <a href="/tags/DataVisualization/" rel="tag"># DataVisualization</a>
           
@@ -466,8 +501,8 @@ TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函�
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08/03/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/22/20170322-来聊聊地图投影的学问/" rel="prev" title="来聊聊地图投影的学问">
+                来聊聊地图投影的学问 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -545,7 +580,7 @@ TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -593,7 +628,7 @@ TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#地图数据中的GeoJson与TopoJson"><span class="nav-number">1.</span> <span class="nav-text">地图数据中的GeoJson与TopoJson</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GeoJSON"><span class="nav-number">1.0.1.</span> <span class="nav-text">GeoJSON</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#地图数据中的GeoJson与TopoJson"><span class="nav-number">1.</span> <span class="nav-text">地图数据中的GeoJson与TopoJson</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GeoJSON"><span class="nav-number">1.0.1.</span> <span class="nav-text">GeoJSON</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Link"><span class="nav-number">1.1.</span> <span class="nav-text">Link</span></a></li></ol></li></ol></div>
             
 
           </div>

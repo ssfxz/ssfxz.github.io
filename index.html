@@ -1421,6 +1421,178 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/22/20170322-来聊聊地图投影的学问/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiuY">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LiuY's TechBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/22/20170322-来聊聊地图投影的学问/" itemprop="url">来聊聊地图投影的学问</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-22T02:10:43+08:00">
+                2017-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="来聊聊地图投影的学问"><a href="#来聊聊地图投影的学问" class="headerlink" title="来聊聊地图投影的学问"></a>来聊聊地图投影的学问</h1><blockquote>
+<p>地图所有人都很熟悉，但估计许多人都不知道我们平时看到的地图中是存在许多门道的，今天我就来一一道来。</p>
+</blockquote>
+<p>先来看看我们平时最常见的世界地图是长这样的。</p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/1.jpg" alt=""></p>
+<p>我们很容易联想到这样一个图形是无法平整的贴在一个球体表面的。真正要帖在球体表面的地图是下图这样的，而且即便如此，也只是近似平整而已。</p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/2.jpg" alt=""></p>
+<p>由于地球是一个近似球体，地球表面是一个不可展开面，因此将地球表面展开后必然会出现撕裂和褶皱。将三维的地球表面映射到二维平面的过程就是地图的投影。而由于空间维度的降低，在投影的过程中，地图的扭曲和形变是无法避免的，因此，在绘制世界地图时，面积、方向和距离是无法全部顾及到。</p>
+<p>以刚刚的世界地图举例：上面的世界地图采用的投影方式叫做<strong>等差分纬线多圆锥投影</strong>，该投影中纬线为对称于赤道的同轴圆圆弧，圆心位于中央经线上。中央经线为一直线，其它经线为对称于中央经线的曲线，且离中央经线越远，其经线间隔成比例地递减；极点表示为圆弧，其长度为赤道投影长度的二分之一，经纬网的图形有球形感。我国被配置在地图中接近于中央的位置，保持太平洋完整。由于该投影的性质是接近等面积的任意投影，因此我国绝大部分地区面积变形小。在中学使用的世界地图中的世界的气候类型和洋流图、世界政区图和自然带的分布图都是采用的这种投影图。</p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/3.jpg" alt=""></p>
+<p>上图显示了等差分纬线多圆锥投影投影形变的程度，图中的1.0线表示面积形变为0，大于1.0表示图上面积比起实际面积放大了，小于1.0表示图上面积比起实际面积缩小了。我国之所以普遍采用这种投影方式也有一部分原因是我国大部分国土面积都处于低形变程度的地图中。</p>
+<p>此外，使用这种投影还存在的问题是：<strong>即使是在实际中互相垂直的方向，在地图中却表现为非垂直</strong>。例如下图中的经线和纬线。</p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/4.png" alt=""></p>
+<p>为了真实表示地图中的方向，就得提到大名鼎鼎的<strong>墨卡托投影（Mercator Projection）</strong>，其投影出的世界地图如下图所示，经线纬线互相垂直并且方向正确。墨卡托投影被广泛应用例如谷歌地图、网易有数等地图场景（此处为硬广：<strong>网易有数</strong>能够绘制填充地图、地图散点图等多种图表类型，并且提供面向全国省市级的可视化数据分析功能，快戳<a href="http://youdata.163.com" target="_blank" rel="external">http://youdata.163.com</a>试用）</p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/5.jpg" alt=""></p>
+<p>墨卡托投影是圆柱投影的一种，是由地理学家墨卡托于16世纪发明的。和所有其它的圆柱投影一样，麦卡托投影的世界地图中，地球纬线是左右方向平行的，长度一样，覆盖整个地图的画幅；而经线是上下方向平行，垂直于纬线。然而在现实世界里，这显然是不对的：如果你拿来一个地球仪仔细观察，就能发现地球的纬线虽然是平行的，但长度却不一样：赤道最长，越往两级方向越短。而经线虽然都是一样长的，但它们并不平行，而是在南极和北极交汇成点。</p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/6.jpg" alt=""></p>
+<p>墨卡托投影的绘制方式是将一张纸卷成圆筒状包住地球，纸面接触地球赤道，模拟地球球心为光源，将地球表面轮廓照射到圆筒上从而形成的地图。在赤道上，由于地球和纸面接触，因此投影出的面积和方向也是完全真实的。然而，离开赤道往南北级方向可以明显发现，投影出的图案面积发生了形变。由于光源在球心，因此南极点和北极点将不会出现在投影中，甚至两级的极圈也不会被投影在地图中。</p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/7.png" alt=""></p>
+<p>假设R为赤道半径，r为北纬60度纬线的半径。r/R=sin(90-60)=0.5，周长=2 <em> pi </em> 半径，因此赤道的半径是北纬60度的2倍。然而，在墨卡托投影的世界地图里，北纬六十度和赤道是一样长的。因此为了保持大陆的形状，在北纬六十度，地图的南北方向也被拉长了2倍。因此，在墨卡托投影的地图中，高纬度的地区会被放大许多。</p>
+<p>这种放大有多夸张呢，这里给大家几张动图感受一下。</p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/中国.gif" alt=""><br><img src="/2017/03/22/20170322-来聊聊地图投影的学问/俄罗斯.gif" alt=""><br><img src="/2017/03/22/20170322-来聊聊地图投影的学问/格陵兰岛.gif" alt=""></p>
+<p>链接在这里，自己玩玩吧：<a href="http://thetruesize.com" target="_blank" rel="external">http://thetruesize.com</a></p>
+<p>然而，即使墨卡托投影存在这样的问题，依然难以阻挡它的广泛应用，另外，选取不同的基准线，画出的地图也可以有不同的特性。</p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/8.png" alt=""></p>
+<p>这里再介绍几种常见的投影方式以作对比：</p>
+<p>最后还要强调一点墨卡托投影或者说大多数投影都存在的一个误区：<strong>地图上两点之间的距离未必是实际中的最短距离</strong>。例如从英国伦敦飞到美国西雅图的民航航线是这样的：</p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/9.jpg" alt=""></p>
+<p>弧线是航班的真实路线。而在平面投影或地球仪上可以明显观察到，上图中这条弧线才是两座城市间的最近距离。</p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/10.jpg" alt=""></p>
+<ul>
+<li>等角度投影</li>
+</ul>
+<p><strong>正切方位投影</strong>，主要用于两极地区地图。以极地为投影中心，又称球面极地投影。纬线为以极为中心的同心圆，经线为由极向四周辐射的直线，纬距由中心向外扩大。投影中央部分的长度和面积变形小，向外逐渐增大。</p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/11.jpg" alt=""></p>
+<ul>
+<li>等面积投影</li>
+</ul>
+<p><strong>摩尔威德投影</strong>是一种伪圆柱投影，和圆柱投影有相似之处，但又用数学方法进行了优化。这种投影方法保持了面积的准确性，也在较大的程度上控制了形状的形变量。它选择一条经线最作为基准，然后把这条经线向东和向西各90度的两条组成大圆的经线在地图上画成一个圆，效果如图所示： </p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/12.png" alt=""></p>
+<ul>
+<li>等距离投影</li>
+</ul>
+<p><strong>等距离圆柱投影</strong>（Equidistant Cylindrical Projection）。它是公认的所有地图投影里，数学变换最简单的一种。麦卡托投影在高纬度地区为了保持形状的准确而将纬线之间的距离拉长；等距离圆锥投影的所有相邻经线和纬线之间的距离都是一样的。因此，在南北方向上，地图上任意两点的距离是保持精确的。这种地图缺点很多，既不保持形状的准确，也不保证面积的准确。但因为它制作简单，因此很多时候它被用作索引地图（例如世界各国列表）或示意地图（例如时区、货币分布、国际组织成员分布等地图）的投影。</p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/13.png" alt=""></p>
+<ul>
+<li>面积、角度、距离最折中的方案</li>
+</ul>
+<p><strong>罗宾逊投影</strong>（Robinson Projection）。前面一直在讨论，在把3维的地球转化为2维的地图的过程中，等方面的精确度不能个个都保全。于是，制图学家们开始寻找有没有折中方案，让这几方面的变形程度尽可能最小化。罗宾逊投影就是这些尝试的其中一个结果。它的效果如下： </p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/14.jpg" alt=""></p>
+<p>罗宾逊投影中，形状、面积和角度等都做不到精确，然而它们之间进行了互相的妥协。和麦卡托地图相比，它的陆地轮廓形状发生了可以接受的扭曲，而高纬度地区的面积变化虽然还存在，但也变小了不少。这种投影方法被发明后，很快就被用于绘制各种各样的世界地图了。</p>
+<p>所以说，究竟有没有一种等积等距等角度的地图呢？当然有，买个地球仪吧。</p>
+<p><img src="/2017/03/22/20170322-来聊聊地图投影的学问/15.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/12/20161212-地图数据中的GeoJson与TopoJson/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1546,7 +1718,7 @@ TopoJSON主要通过以下方式减小文件的体积。
 
 介绍完GeoJSON与TopoJSON，来讲一讲我在工作中遇到的需求。
 
-![](/20161212-地图数据中的GeoJson与TopoJson/1.png)
+![](20161212-地图数据中的GeoJson与TopoJson/1.png)
 如图所示：当选中了地图中的两个相连的区域时，区域公共边依然会显示出来，需求是连续的区域不显示公共边。但由于GeoJSON中的边缘信息时分别存储于每一个Geometry中，所以想要找到所有重叠的公共点有很高的时间复杂度，因此考虑将GeoJSON转换为TopoJSON处理。
 
 GeoJSON与TopoJSON的互相转换可以通过TopoJSON提供的转换器实现：
@@ -1559,25 +1731,62 @@ GeoJSON与TopoJSON的互相转换可以通过TopoJSON提供的转换器实现：
 TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函数用于区域合并，因此使用TopoJSON可以轻松实现以上需求，同时还能减小地图数据文件的体积。  
 
 示例代码如下：
-</code></pre><p>&lt;!DOCTYPE html&gt;</p>
-<p><meta charset="utf-8"></p>
-<style>
 
-<p>.state {<br>  fill: #DDD;<br>  stroke: #FFF;<br>}</p>
-<p>.state.selected {<br>  fill: #0CF;<br>  stroke: #000;<br>}</p>
-<p></style><p></p>
-<p><body></body></p>
-<p><script src="https://d3js.org/d3.v3.js"></script></p>
-<p><script src="https://d3js.org/topojson.v2.js"></script></p>
-<p><script><br> var width = 960,<br>  height = 600;</p>
-<p>  var projection = d3.geo.mercator()<br>    .translate([-width / 1.2, height * 1.2])<br>    .scale((width) / 1.5);</p>
-<p>  var path = d3.geo.path()<br>   .projection(projection);</p>
-<p>  var svg = d3.select(“body”).append(“svg”)<br>    .attr(“width”, width)<br>    .attr(“height”, height);</p>
-<p>  var selected = d3.set([<br>  “CHN<em>西藏”,<br>  “CHN</em>新疆”,<br>  “CHN_青海”<br>  ]);</p>
-<p>  d3.json(“out.json”, function(error, china) {<br>  if (error) throw error;</p>
-<p>  var rr = svg.append(“path”)<br>      .datum(topojson.feature(china, china.objects.geo))<br>      .attr(“class”, “state”);<br>      rr.attr(“d”, path);</p>
-<p>  svg.append(“path”)<br>      .datum(topojson.merge(china, china.objects.geo.geometries.filter(function(d) { return selected.has(d.properties.id); })))<br>      .attr(“class”, “state selected”)<br>      .attr(“d”, path);<br>});<br></script><br>```</p>
-<p>##Link<br><a href="http://geojson.org/geojson-spec.html" target="_blank" rel="external">geojson-spec</a><br><a href="https://github.com/topojson/topojson-specification/blob/master/README.md" target="_blank" rel="external">topojson-specification</a><br><a href="http://mapshaper.org/" target="_blank" rel="external">简化、转换 GeoJSON 和 TopoJSON</a></p>
+``` HTML
+&lt;!DOCTYPE html&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;style&gt;
+
+.state {
+  fill: #DDD;
+  stroke: #FFF;
+}
+
+.state.selected {
+  fill: #0CF;
+  stroke: #000;
+}
+
+&lt;/style&gt;
+&lt;body&gt;
+&lt;script src=&quot;https://d3js.org/d3.v3.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://d3js.org/topojson.v2.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+ var width = 960,
+  height = 600;
+
+  var projection = d3.geo.mercator()
+    .translate([-width / 1.2, height * 1.2])
+    .scale((width) / 1.5);
+
+  var path = d3.geo.path()
+   .projection(projection);
+
+  var svg = d3.select(&quot;body&quot;).append(&quot;svg&quot;)
+    .attr(&quot;width&quot;, width)
+    .attr(&quot;height&quot;, height);
+
+  var selected = d3.set([
+  &quot;CHN_西藏&quot;,
+  &quot;CHN_新疆&quot;,
+  &quot;CHN_青海&quot;
+  ]);
+
+  d3.json(&quot;out.json&quot;, function(error, china) {
+  if (error) throw error;
+
+  var rr = svg.append(&quot;path&quot;)
+      .datum(topojson.feature(china, china.objects.geo))
+      .attr(&quot;class&quot;, &quot;state&quot;);
+      rr.attr(&quot;d&quot;, path);
+
+  svg.append(&quot;path&quot;)
+      .datum(topojson.merge(china, china.objects.geo.geometries.filter(function(d) { return selected.has(d.properties.id); })))
+      .attr(&quot;class&quot;, &quot;state selected&quot;)
+      .attr(&quot;d&quot;, path);
+});
+&lt;/script&gt;
+</code></pre><h2 id="Link"><a href="#Link" class="headerlink" title="Link"></a>Link</h2><p><a href="http://geojson.org/geojson-spec.html" target="_blank" rel="external">geojson-spec</a><br><a href="https://github.com/topojson/topojson-specification/blob/master/README.md" target="_blank" rel="external">topojson-specification</a><br><a href="http://mapshaper.org/" target="_blank" rel="external">简化、转换 GeoJSON 和 TopoJSON</a></p>
 
           
         
@@ -1659,7 +1868,7 @@ TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
