@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NEV,DataVisualization," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="NEV与其他图表引擎的横向对比 对比的其他图表库包括vega、HighCharts、 ECharts以及G2  图表类型 柱状图     —- vega HighCharts Echarts G2 NEV     堆叠柱状图 ✅ ✅ ✅ ✅ ✅   并列柱状图 ✅ ✅ ✅ ✅ ✅   百分比堆叠柱状图 ✅ ✅ ❌ ✅ ✅表计算   并列堆叠柱状图 ✅ ✅ ✅ ✅ ✅   转置柱状图 ✅ ✅ ✅ ✅">
+<meta name="keywords" content="NEV,DataVisualization">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NEV与其他图表引擎的横向对比">
+<meta property="og:url" content="http://yoursite.com/2017/08/04/NEV图表对比/index.html">
+<meta property="og:site_name" content="LiuY&#39;s TechBlog">
+<meta property="og:description" content="NEV与其他图表引擎的横向对比 对比的其他图表库包括vega、HighCharts、 ECharts以及G2  图表类型 柱状图     —- vega HighCharts Echarts G2 NEV     堆叠柱状图 ✅ ✅ ✅ ✅ ✅   并列柱状图 ✅ ✅ ✅ ✅ ✅   百分比堆叠柱状图 ✅ ✅ ❌ ✅ ✅表计算   并列堆叠柱状图 ✅ ✅ ✅ ✅ ✅   转置柱状图 ✅ ✅ ✅ ✅">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-08-11T15:37:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NEV与其他图表引擎的横向对比">
+<meta name="twitter:description" content="NEV与其他图表引擎的横向对比 对比的其他图表库包括vega、HighCharts、 ECharts以及G2  图表类型 柱状图     —- vega HighCharts Echarts G2 NEV     堆叠柱状图 ✅ ✅ ✅ ✅ ✅   并列柱状图 ✅ ✅ ✅ ✅ ✅   百分比堆叠柱状图 ✅ ✅ ❌ ✅ ✅表计算   并列堆叠柱状图 ✅ ✅ ✅ ✅ ✅   转置柱状图 ✅ ✅ ✅ ✅">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/04/NEV图表对比/"/>
+
+
+
+
+
+  <title>NEV与其他图表引擎的横向对比 | LiuY's TechBlog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LiuY's TechBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/04/NEV图表对比/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiuY">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LiuY's TechBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">NEV与其他图表引擎的横向对比</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-04T11:08:44+08:00">
+                2017-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="NEV与其他图表引擎的横向对比"><a href="#NEV与其他图表引擎的横向对比" class="headerlink" title="NEV与其他图表引擎的横向对比"></a>NEV与其他图表引擎的横向对比</h1><blockquote>
+<p>对比的其他图表库包括<strong>vega</strong>、<strong>HighCharts</strong>、 <strong>ECharts</strong>以及<strong>G2</strong></p>
+</blockquote>
+<h2 id="图表类型"><a href="#图表类型" class="headerlink" title="图表类型"></a>图表类型</h2><ul>
+<li>柱状图</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>—-</th>
+<th>vega</th>
+<th>HighCharts</th>
+<th>Echarts</th>
+<th>G2</th>
+<th>NEV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>堆叠柱状图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>并列柱状图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>百分比堆叠柱状图</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅表计算</td>
+</tr>
+<tr>
+<td>并列堆叠柱状图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>转置柱状图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>折线图、区域图</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>—-</th>
+<th>vega</th>
+<th>HighCharts</th>
+<th>Echarts</th>
+<th>G2</th>
+<th>NEV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>普通折线图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>平滑折线图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>转置折线图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>区域图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>百分比堆叠区域图</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅表计算</td>
+</tr>
+<tr>
+<td>范围区域图</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>转置区域图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>饼图</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>—-</th>
+<th>vega</th>
+<th>HighCharts</th>
+<th>Echarts</th>
+<th>G2</th>
+<th>NEV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>饼图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>玫瑰图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>环形图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>环形玫瑰图</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>笛卡尔饼图</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>散点图、气泡图</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>—-</th>
+<th>vega</th>
+<th>HighCharts</th>
+<th>Echarts</th>
+<th>G2</th>
+<th>NEV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>散点图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>文本图</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>气泡图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>地图</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>—-</th>
+<th>vega</th>
+<th>HighCharts</th>
+<th>Echarts</th>
+<th>G2</th>
+<th>NEV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地图散点图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>填充地图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>迁徙地图</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅nev-lite</td>
+</tr>
+<tr>
+<td>热力地图</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>组合图</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>—-</th>
+<th>vega</th>
+<th>HighCharts</th>
+<th>Echarts</th>
+<th>G2</th>
+<th>NEV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>折现柱状图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>散点柱状图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>地图饼图</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>高级图表</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>—-</th>
+<th>vega</th>
+<th>HighCharts</th>
+<th>Echarts</th>
+<th>G2</th>
+<th>NEV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>子弹图</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>仪表图</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>树图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>词云</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>漏斗图</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>热力图</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>3D图</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>关系图</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>雷达图</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>箱线图</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>平行坐标系</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>桑基图</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>瀑布图</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>甘特图</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>图表高级功能</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>—-</th>
+<th>vega</th>
+<th>HighCharts</th>
+<th>Echarts</th>
+<th>G2</th>
+<th>NEV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对数轴</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>时间轴</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>双轴</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>透视</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>参考线</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>主题样式</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h2 id="移动端定制版支持"><a href="#移动端定制版支持" class="headerlink" title="移动端定制版支持"></a>移动端定制版支持</h2><table>
+<thead>
+<tr>
+<th>图表库</th>
+<th>详细</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vega</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>HighCharts</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Echarts</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>G2</td>
+<td>✅ 有移动端版，但该仅支持部分图表且无交互</td>
+</tr>
+<tr>
+<td>NEV</td>
+<td>✅ 几乎所有图表均提供移动端定制版，且针对移动端提供定制化交互</td>
+</tr>
+</tbody>
+</table>
+<h2 id="交互丰富程度与定制性"><a href="#交互丰富程度与定制性" class="headerlink" title="交互丰富程度与定制性"></a>交互丰富程度与定制性</h2><table>
+<thead>
+<tr>
+<th>图表库</th>
+<th>交互丰富程度</th>
+<th>移动端交互</th>
+<th>可定制性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vega</td>
+<td>⭐️⭐️</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>HighCharts</td>
+<td>⭐️⭐️</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Echarts</td>
+<td>⭐️⭐️⭐️⭐️⭐️</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>G2</td>
+<td>⭐️⭐️⭐️⭐️</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>NEV</td>
+<td>⭐️⭐️⭐️⭐️</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h2 id="图表扩展组合能力"><a href="#图表扩展组合能力" class="headerlink" title="图表扩展组合能力"></a>图表扩展组合能力</h2><table>
+<thead>
+<tr>
+<th>图表库</th>
+<th>详细</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vega</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>HighCharts</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Echarts</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>G2</td>
+<td>✅    </td>
+</tr>
+<tr>
+<td>NEV</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h2 id="接口功能与易用性"><a href="#接口功能与易用性" class="headerlink" title="接口功能与易用性"></a>接口功能与易用性</h2><table>
+<thead>
+<tr>
+<th>图表库</th>
+<th>接口功能</th>
+<th>易用性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vega</td>
+<td>⭐️⭐️⭐️⭐️</td>
+<td>⭐️⭐️</td>
+</tr>
+<tr>
+<td>HighCharts</td>
+<td>⭐️⭐️</td>
+<td>⭐️⭐️⭐️⭐️</td>
+</tr>
+<tr>
+<td>Echarts</td>
+<td>⭐️⭐️</td>
+<td>⭐️⭐️⭐️⭐️</td>
+</tr>
+<tr>
+<td>G2</td>
+<td>⭐️⭐️⭐️⭐️</td>
+<td>⭐️⭐️⭐️⭐️</td>
+</tr>
+<tr>
+<td>NEV</td>
+<td>⭐️⭐️⭐️⭐️⭐️</td>
+<td>⭐️⭐️</td>
+</tr>
+</tbody>
+</table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p><strong>vega</strong>: 绘图功能强大，遵循图形语法，因此带来了强大的图表组合能力，但由于是非商业化的开源项目，因此在视觉、交互等方面有所欠缺，而且接口复杂，学习曲线略微陡峭。</p>
+</li>
+<li><p><strong>HighCharts</strong>: 图表类型丰富，不支持图表元素组合扩展，带有商业性质的项目，商业用途需购买授权，难以进行二次开发，对于不支持的图表难以扩展。</p>
+</li>
+<li><p><strong>Echarts</strong>: 图表类型丰富，提供良好的视觉和交互体验，不遵循图形语法，不能进行图表组合扩展，免费开源项目，可以用于商业用途，难以进行二次开发，对于不支持的图表难以扩展。</p>
+</li>
+<li><p><strong>G2</strong>: 遵循图形语法，接口使用方便，非开源项目，各方面能力较为均衡。</p>
+</li>
+<li><p><strong>NEV</strong>: 遵循图形语法，具有图表组合扩展能力，支持用户进行高度定制化的配置需求，提供良好的视觉和交互体验，提供移动端定制版，支持交互定制，高度支持图表透视功能，缺点是用户接口使用略有不便。</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NEV/" rel="tag"># NEV</a>
+          
+            <a href="/tags/DataVisualization/" rel="tag"># DataVisualization</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/22/来聊聊地图投影的学问/" rel="next" title="来聊聊地图投影的学问">
+                <i class="fa fa-chevron-left"></i> 来聊聊地图投影的学问
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/05/Gopher杭州Meetup/" rel="prev" title="Gopher杭州Meetup">
+                Gopher杭州Meetup <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="LiuY" />
+          <p class="site-author-name" itemprop="name">LiuY</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NEV与其他图表引擎的横向对比"><span class="nav-number">1.</span> <span class="nav-text">NEV与其他图表引擎的横向对比</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#图表类型"><span class="nav-number">1.1.</span> <span class="nav-text">图表类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移动端定制版支持"><span class="nav-number">1.2.</span> <span class="nav-text">移动端定制版支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交互丰富程度与定制性"><span class="nav-number">1.3.</span> <span class="nav-text">交互丰富程度与定制性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图表扩展组合能力"><span class="nav-number">1.4.</span> <span class="nav-text">图表扩展组合能力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口功能与易用性"><span class="nav-number">1.5.</span> <span class="nav-text">接口功能与易用性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LiuY</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

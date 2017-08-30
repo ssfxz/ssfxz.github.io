@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="MongoDB," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="MongoDB基于分布式文件存储的数据库 MongoDB中数据的基本单元称为文档(Document)，它是MongoDB的核心概念，由多个键极其关联的值有序的放置在一起组成，数据库中它对应于关系型数据库的行。 数据在MongoDB中以BSON（Binary-JSON）文档的格式存储在磁盘上。 基本操作增1234db.collection.insert(document);db.collection">
+<meta name="keywords" content="MongoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB学习笔记">
+<meta property="og:url" content="http://yoursite.com/2017/08/30/MongoDB学习笔记/index.html">
+<meta property="og:site_name" content="LiuY&#39;s TechBlog">
+<meta property="og:description" content="MongoDB基于分布式文件存储的数据库 MongoDB中数据的基本单元称为文档(Document)，它是MongoDB的核心概念，由多个键极其关联的值有序的放置在一起组成，数据库中它对应于关系型数据库的行。 数据在MongoDB中以BSON（Binary-JSON）文档的格式存储在磁盘上。 基本操作增1234db.collection.insert(document);db.collection">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-08-30T11:01:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB学习笔记">
+<meta name="twitter:description" content="MongoDB基于分布式文件存储的数据库 MongoDB中数据的基本单元称为文档(Document)，它是MongoDB的核心概念，由多个键极其关联的值有序的放置在一起组成，数据库中它对应于关系型数据库的行。 数据在MongoDB中以BSON（Binary-JSON）文档的格式存储在磁盘上。 基本操作增1234db.collection.insert(document);db.collection">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/30/MongoDB学习笔记/"/>
+
+
+
+
+
+  <title>MongoDB学习笔记 | LiuY's TechBlog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LiuY's TechBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/30/MongoDB学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiuY">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LiuY's TechBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MongoDB学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-30T18:59:36+08:00">
+                2017-08-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h1><p>基于分布式文件存储的数据库</p>
+<p>MongoDB中数据的基本单元称为文档(Document)，它是MongoDB的核心概念，由多个键极其关联的值有序的放置在一起组成，数据库中它对应于关系型数据库的行。</p>
+<p>数据在MongoDB中以BSON（Binary-JSON）文档的格式存储在磁盘上。</p>
+<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><h3 id="增"><a href="#增" class="headerlink" title="增"></a>增</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.insert</span>(<span class="selector-tag">document</span>);</div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.insert</span>(<span class="selector-attr">[doc1, doc2, ...]</span>);</div><div class="line"></div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.person</span><span class="selector-class">.insert</span>(&#123;<span class="attribute">name</span>:<span class="string">"Liuy"</span>, age: <span class="number">27</span>&#125;);</div></pre></td></tr></table></figure>
+<h3 id="查"><a href="#查" class="headerlink" title="查"></a>查</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">show</span> <span class="selector-tag">collections</span></div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.find</span>();</div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.find</span>(<span class="selector-tag">criteria</span>,<span class="selector-tag">projection</span>);</div><div class="line"></div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.person</span><span class="selector-class">.find</span>(&#123;<span class="attribute">age</span>:&#123;$gt:<span class="number">18</span>&#125;&#125;,&#123;<span class="attribute">name</span>:<span class="number">1</span>&#125;)<span class="selector-class">.sort</span>(&#123;<span class="attribute">age</span>:<span class="number">1</span>&#125;)<span class="selector-class">.limit</span>(5);</div></pre></td></tr></table></figure>
+<ul>
+<li>criteria – 查询条件，文档类型，可选。</li>
+<li>projection– 返回的字段，文档类型，可选,若需返回所有字段，则忽略此参数。</li>
+</ul>
+<h3 id="改"><a href="#改" class="headerlink" title="改"></a>改</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">db.collection.update(query,update,&#123;<span class="string">upsert:</span><span class="keyword">boolean</span>,<span class="string">multi:</span><span class="keyword">boolean</span>&#125;);</div><div class="line">db.collection.save(document);</div><div class="line"></div><div class="line">db.person.update(&#123;<span class="string">age:</span>&#123;<span class="string">$gt:</span><span class="number">18</span>&#125;&#125;,&#123;<span class="string">$set:</span>&#123;<span class="string">status:</span><span class="string">"A"</span>&#125;&#125;,&#123;<span class="string">multi:</span><span class="literal">true</span>&#125;);</div><div class="line">db.person.save(&#123;<span class="string">name:</span><span class="string">"Tony"</span>,<span class="string">age:</span><span class="number">12</span>,<span class="string">gender:</span><span class="string">"man"</span>&#125;);</div></pre></td></tr></table></figure>
+<p>save命令可以<strong>更新</strong>或<strong>插入</strong>一个新文档</p>
+<ul>
+<li>query：查询条件，文档，和find中的查询条件写法一致。</li>
+<li>update：修改内容，文档。</li>
+<li>upsert(可选)：如果值为true，那么当集合中没有匹配文档时，创建文档。默认false。</li>
+<li>multi(可选)：如果值为true，那么将更新全部符合条件的文档，否则仅更新一个文档，默认false。</li>
+</ul>
+<h3 id="删"><a href="#删" class="headerlink" title="删"></a>删</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.remove</span>(<span class="selector-tag">query</span>,<span class="selector-tag">justOne</span>);</div><div class="line"></div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.person</span><span class="selector-class">.remove</span>(&#123;<span class="attribute">status</span>:<span class="string">"D"</span>&#125;);</div></pre></td></tr></table></figure>
+<ul>
+<li>query：BSON类型，删除文档的条件。</li>
+<li>justOne：布尔类型，true：只删除一个文档，false：默认值，删除所有符合条件的文档。</li>
+</ul>
+<h2 id="字段查询"><a href="#字段查询" class="headerlink" title="字段查询"></a>字段查询</h2><h3 id="相等条件"><a href="#相等条件" class="headerlink" title="相等条件"></a>相等条件</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">db</span><span class="selector-class">.person</span><span class="selector-class">.find</span>(&#123;<span class="attribute">status</span>:<span class="string">"A"</span>&#125;);</div></pre></td></tr></table></figure>
+<h3 id="比较条件"><a href="#比较条件" class="headerlink" title="比较条件"></a>比较条件</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">db</span><span class="selector-class">.person</span><span class="selector-class">.find</span>(&#123;<span class="attribute">age</span>:&#123;$gt:<span class="number">40</span>&#125;&#125;);</div></pre></td></tr></table></figure>
+<h3 id="数组条件"><a href="#数组条件" class="headerlink" title="数组条件"></a>数组条件</h3><blockquote>
+<p>当字段包含数组，可以进行数组完全匹配或匹配特定的值 </p>
+</blockquote>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 数组完全匹配</span></div><div class="line">db.inventory.<span class="built_in">find</span>( &#123; tags: [ <span class="string">'fruit'</span>, <span class="string">'food'</span>, <span class="string">'citrus'</span> ] &#125; );</div><div class="line"></div><div class="line"><span class="comment">// 单个元素匹配</span></div><div class="line">db.inventory.<span class="built_in">find</span>( &#123; tags: <span class="string">'fruit'</span> &#125; );</div><div class="line"></div><div class="line"><span class="comment">// 特定元素匹配  特定元素匹配需要"字段.索引"形式传入参数。</span></div><div class="line">db.inventory.<span class="built_in">find</span>( &#123; <span class="string">'tags.0'</span> : <span class="string">'fruit'</span> &#125; );</div></pre></td></tr></table></figure>
+<h3 id="子文档条件"><a href="#子文档条件" class="headerlink" title="子文档条件"></a>子文档条件</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.mycol.<span class="builtin-name">find</span>(&#123;<span class="string">"access.level"</span>:5&#125;);</div></pre></td></tr></table></figure>
+<h2 id="复合查询-AND-OR"><a href="#复合查询-AND-OR" class="headerlink" title="复合查询 AND/OR"></a>复合查询 AND/OR</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">db.collection.<span class="builtin-name">find</span>(&#123;<span class="variable">$and</span>:[doc1,doc2,<span class="built_in">..</span>.]&#125;)</div><div class="line">db.collection.<span class="builtin-name">find</span>(&#123;<span class="variable">$or</span>:[doc1,doc2,<span class="built_in">..</span>.]&#125;)</div><div class="line"></div><div class="line">db.person.<span class="builtin-name">find</span>(&#123;<span class="variable">$and</span>:[&#123;age:&#123;<span class="variable">$gt</span>:30&#125;&#125;,&#123;name:<span class="string">"Lucy"</span>&#125;]&#125;);</div><div class="line">db.person.<span class="builtin-name">find</span>(&#123;<span class="variable">$or</span>:[&#123;status:<span class="string">"A"</span>&#125;,&#123;age:30&#125;]&#125;);</div></pre></td></tr></table></figure>
+<h2 id="游标与结果集"><a href="#游标与结果集" class="headerlink" title="游标与结果集"></a>游标与结果集</h2><h3 id="cursor游标"><a href="#cursor游标" class="headerlink" title="cursor游标"></a>cursor游标</h3><blockquote>
+<p>find命令并不直接返回结果，而是返回一个结果集的迭代器，即游标。</p>
+</blockquote>
+<p>可以使用next方法来遍历游标</p>
+<figure class="highlight golo"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myCursor = db.inventory.<span class="keyword">find</span>( &#123; type: <span class="string">"food"</span> &#125; );</div><div class="line"><span class="keyword">var</span> myDocument = myCursor.hasNext() ? myCursor.next() : <span class="literal">null</span>;</div><div class="line"><span class="keyword">if</span> (myDocument) &#123;</div><div class="line">    <span class="keyword">var</span> myItem = myDocument.item;</div><div class="line">    <span class="keyword">print</span>(tojson(myItem));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用forEach方法也能实现游标的遍历<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myCursor =  <span class="keyword">db</span>.inventory.find( &#123; <span class="keyword">type</span>: <span class="string">"food"</span> &#125; );</div><div class="line">myCursor.<span class="keyword">forEach</span>(printjson);</div></pre></td></tr></table></figure></p>
+<h3 id="结果集"><a href="#结果集" class="headerlink" title="结果集"></a>结果集</h3><p>限制条件<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.find</span>()<span class="selector-class">.limit</span>(<span class="selector-tag">Num</span>)</div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.person</span><span class="selector-class">.find</span>(&#123;&#125;,&#123;<span class="attribute">name</span>:<span class="number">1</span>&#125;)</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/05/Gopher杭州Meetup/" rel="next" title="Gopher杭州Meetup">
+                <i class="fa fa-chevron-left"></i> Gopher杭州Meetup
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="LiuY" />
+          <p class="site-author-name" itemprop="name">LiuY</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MongoDB"><span class="nav-number">1.</span> <span class="nav-text">MongoDB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本操作"><span class="nav-number">1.1.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增"><span class="nav-number">1.1.1.</span> <span class="nav-text">增</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查"><span class="nav-number">1.1.2.</span> <span class="nav-text">查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改"><span class="nav-number">1.1.3.</span> <span class="nav-text">改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删"><span class="nav-number">1.1.4.</span> <span class="nav-text">删</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字段查询"><span class="nav-number">1.2.</span> <span class="nav-text">字段查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相等条件"><span class="nav-number">1.2.1.</span> <span class="nav-text">相等条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比较条件"><span class="nav-number">1.2.2.</span> <span class="nav-text">比较条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组条件"><span class="nav-number">1.2.3.</span> <span class="nav-text">数组条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子文档条件"><span class="nav-number">1.2.4.</span> <span class="nav-text">子文档条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复合查询-AND-OR"><span class="nav-number">1.3.</span> <span class="nav-text">复合查询 AND/OR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#游标与结果集"><span class="nav-number">1.4.</span> <span class="nav-text">游标与结果集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cursor游标"><span class="nav-number">1.4.1.</span> <span class="nav-text">cursor游标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果集"><span class="nav-number">1.4.2.</span> <span class="nav-text">结果集</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LiuY</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

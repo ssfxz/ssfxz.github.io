@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Meetup," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Gopher杭州Meetup可视化学习 Go 并发编程黄庆兵:网易 围绕Go并发编程，结合gotrace工具，让你眼见为实学习Go并发编程  GoTrace + three.js 算法可视化 基于Go的大数据平台陈超:七牛 大数据一直是我们在谈论的话题，不管你数据到底有多大？陈超带来全新的大数据处理思路。  七牛云广告 分布式计算调度算法: 根据CPU、内存、网络、任务分布度等系统资源占用情况进行">
+<meta name="keywords" content="Meetup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gopher杭州Meetup">
+<meta property="og:url" content="http://yoursite.com/2017/08/05/Gopher杭州Meetup/index.html">
+<meta property="og:site_name" content="LiuY&#39;s TechBlog">
+<meta property="og:description" content="Gopher杭州Meetup可视化学习 Go 并发编程黄庆兵:网易 围绕Go并发编程，结合gotrace工具，让你眼见为实学习Go并发编程  GoTrace + three.js 算法可视化 基于Go的大数据平台陈超:七牛 大数据一直是我们在谈论的话题，不管你数据到底有多大？陈超带来全新的大数据处理思路。  七牛云广告 分布式计算调度算法: 根据CPU、内存、网络、任务分布度等系统资源占用情况进行">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-08-05T18:53:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gopher杭州Meetup">
+<meta name="twitter:description" content="Gopher杭州Meetup可视化学习 Go 并发编程黄庆兵:网易 围绕Go并发编程，结合gotrace工具，让你眼见为实学习Go并发编程  GoTrace + three.js 算法可视化 基于Go的大数据平台陈超:七牛 大数据一直是我们在谈论的话题，不管你数据到底有多大？陈超带来全新的大数据处理思路。  七牛云广告 分布式计算调度算法: 根据CPU、内存、网络、任务分布度等系统资源占用情况进行">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/05/Gopher杭州Meetup/"/>
+
+
+
+
+
+  <title>Gopher杭州Meetup | LiuY's TechBlog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LiuY's TechBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/05/Gopher杭州Meetup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiuY">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LiuY's TechBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Gopher杭州Meetup</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-05T15:16:54+08:00">
+                2017-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Gopher杭州Meetup"><a href="#Gopher杭州Meetup" class="headerlink" title="Gopher杭州Meetup"></a>Gopher杭州Meetup</h1><h2 id="可视化学习-Go-并发编程"><a href="#可视化学习-Go-并发编程" class="headerlink" title="可视化学习 Go 并发编程"></a>可视化学习 Go 并发编程</h2><h3 id="黄庆兵-网易"><a href="#黄庆兵-网易" class="headerlink" title="黄庆兵:网易"></a>黄庆兵:网易</h3><blockquote>
+<p>围绕Go并发编程，结合gotrace工具，让你眼见为实学习Go并发编程</p>
+</blockquote>
+<p>GoTrace + three.js</p>
+<p><strong>算法可视化</strong></p>
+<h2 id="基于Go的大数据平台"><a href="#基于Go的大数据平台" class="headerlink" title="基于Go的大数据平台"></a>基于Go的大数据平台</h2><h3 id="陈超-七牛"><a href="#陈超-七牛" class="headerlink" title="陈超:七牛"></a>陈超:七牛</h3><blockquote>
+<p>大数据一直是我们在谈论的话题，不管你数据到底有多大？陈超带来全新的大数据处理思路。</p>
+</blockquote>
+<p>七牛云广告</p>
+<p><strong>分布式计算调度算法</strong>: 根据CPU、内存、网络、任务分布度等系统资源占用情况进行打分 </p>
+<h2 id="Kubernetes语境下的基于Golang的编程范式"><a href="#Kubernetes语境下的基于Golang的编程范式" class="headerlink" title="Kubernetes语境下的基于Golang的编程范式"></a>Kubernetes语境下的基于Golang的编程范式</h2><h3 id="张磊-Hyper项目成员，Kubernetes项目官方Project-Manager和Feature-Maintainer"><a href="#张磊-Hyper项目成员，Kubernetes项目官方Project-Manager和Feature-Maintainer" class="headerlink" title="张磊:Hyper项目成员，Kubernetes项目官方Project Manager和Feature Maintainer"></a>张磊:Hyper项目成员，Kubernetes项目官方Project Manager和Feature Maintainer</h3><blockquote>
+<p>介绍Kubernetes项目中面向Etcd的对象控制器、工作队列、自定义资源、容器运行时接口等一系列基于Golang的编程范式，同时讲解开发者如何使用这些范式来“无损”地扩展Kubernetes核心能力的最佳实践。</p>
+</blockquote>
+<ul>
+<li><p>Kubernetes<br>  Kubernetes作为Docker生态圈中重要一员，是Google多年大规模容器管理技术的开源版本，是产线实践经验的最佳表现[G1] 。<br>面向 API ”OO“ Programming</p>
+</li>
+<li><p>etcd<br>  可用强一致性的服务发现存储仓库  </p>
+</li>
+<li><p>gRPC<br>  是一个高性能、通用的开源RPC框架，其由Google主要面向移动应用开发并基于HTTP/2协议标准而设计，基于ProtoBuf(Protocol Buffers)序列化协议开发，且支持众多开发语言。</p>
+</li>
+<li><p>RPC<br>  远程过程调用（英语：Remote Procedure Call，縮寫為RPC）是一个计算机通信协议。 该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程。</p>
+</li>
+</ul>
+<h2 id="基于Mesos的容器调度框架"><a href="#基于Mesos的容器调度框架" class="headerlink" title="基于Mesos的容器调度框架"></a>基于Mesos的容器调度框架</h2><h3 id="黄励博-又拍云"><a href="#黄励博-又拍云" class="headerlink" title="黄励博:又拍云"></a>黄励博:又拍云</h3><blockquote>
+<p>为了更好地完成云处理服务的负载均衡，零停机升级，自定义策略调度等功能，又拍云用Go实现了自己的容器调度框架<strong>upone</strong>，管理长期服务和定时任务。</p>
+</blockquote>
+<ul>
+<li>Raft<br>Raft 是一种用来管理日志复制的一致性算法</li>
+</ul>
+<p>报警使用slack</p>
+<h2 id="Go使用gRPC-http打造高性能微服务"><a href="#Go使用gRPC-http打造高性能微服务" class="headerlink" title="Go使用gRPC+http打造高性能微服务"></a>Go使用gRPC+http打造高性能微服务</h2><h3 id="谢孟军：GoCN"><a href="#谢孟军：GoCN" class="headerlink" title="谢孟军：GoCN"></a>谢孟军：GoCN</h3><blockquote>
+<p>GRPC已成为互联网最佳的通讯标准，如何打造一个高性能的微服务？</p>
+</blockquote>
+<h3 id="微服务-MicroServices"><a href="#微服务-MicroServices" class="headerlink" title="微服务 MicroServices"></a>微服务 MicroServices</h3><blockquote>
+<p>小、独立服务<br>微服务可以按照功能来划分，或披萨理论，开发到部署3-4个人</p>
+</blockquote>
+<h3 id="gRPC"><a href="#gRPC" class="headerlink" title="gRPC"></a>gRPC</h3><blockquote>
+<p>基于HTTP/2 POST protobuf</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>JSON</th>
+<th>protobuf</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>plaintext</td>
+<td>binary</td>
+</tr>
+<tr>
+<td>human readable</td>
+<td>machine readable</td>
+</tr>
+<tr>
+<td>repetitive</td>
+<td>compressed</td>
+</tr>
+<tr>
+<td>fast (de)serialization</td>
+<td>faster (de) serialization</td>
+</tr>
+<tr>
+<td>Everything supports it</td>
+<td>limited support</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>HTTP/1.1</th>
+<th>HTTP/2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>plaintext</td>
+<td>binary</td>
+</tr>
+<tr>
+<td>no pipelining</td>
+<td>native pipelining</td>
+</tr>
+<tr>
+<td>new connection per request</td>
+<td>persistent TCP</td>
+</tr>
+<tr>
+<td>repetitive</td>
+<td>compressed</td>
+</tr>
+<tr>
+<td>polling</td>
+<td>streaming</td>
+</tr>
+<tr>
+<td>Non-secure by default</td>
+<td>TLS by default</td>
+</tr>
+<tr>
+<td>Everything supports it</td>
+<td>limited support</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>REST<br>  REpresentational State Transfer，全称是 Resource Representational State Transfer：通俗来讲就是：资源在网络中以某种表现形式进行状态转移。<br>  URL定位资源，用HTTP动词（GET,POST,DELETE,DETC）描述操作。</li>
+</ul>
+<h3 id="如何使用gRPC-http打造微服务"><a href="#如何使用gRPC-http打造微服务" class="headerlink" title="如何使用gRPC+http打造微服务"></a>如何使用gRPC+http打造微服务</h3><h3 id="为什么GO适合做微服务"><a href="#为什么GO适合做微服务" class="headerlink" title="为什么GO适合做微服务"></a>为什么GO适合做微服务</h3><ul>
+<li>小</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Meetup/" rel="tag"># Meetup</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/04/NEV图表对比/" rel="next" title="NEV与其他图表引擎的横向对比">
+                <i class="fa fa-chevron-left"></i> NEV与其他图表引擎的横向对比
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/30/MongoDB学习笔记/" rel="prev" title="MongoDB学习笔记">
+                MongoDB学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="LiuY" />
+          <p class="site-author-name" itemprop="name">LiuY</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Gopher杭州Meetup"><span class="nav-number">1.</span> <span class="nav-text">Gopher杭州Meetup</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#可视化学习-Go-并发编程"><span class="nav-number">1.1.</span> <span class="nav-text">可视化学习 Go 并发编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#黄庆兵-网易"><span class="nav-number">1.1.1.</span> <span class="nav-text">黄庆兵:网易</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Go的大数据平台"><span class="nav-number">1.2.</span> <span class="nav-text">基于Go的大数据平台</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#陈超-七牛"><span class="nav-number">1.2.1.</span> <span class="nav-text">陈超:七牛</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes语境下的基于Golang的编程范式"><span class="nav-number">1.3.</span> <span class="nav-text">Kubernetes语境下的基于Golang的编程范式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#张磊-Hyper项目成员，Kubernetes项目官方Project-Manager和Feature-Maintainer"><span class="nav-number">1.3.1.</span> <span class="nav-text">张磊:Hyper项目成员，Kubernetes项目官方Project Manager和Feature Maintainer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Mesos的容器调度框架"><span class="nav-number">1.4.</span> <span class="nav-text">基于Mesos的容器调度框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#黄励博-又拍云"><span class="nav-number">1.4.1.</span> <span class="nav-text">黄励博:又拍云</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go使用gRPC-http打造高性能微服务"><span class="nav-number">1.5.</span> <span class="nav-text">Go使用gRPC+http打造高性能微服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#谢孟军：GoCN"><span class="nav-number">1.5.1.</span> <span class="nav-text">谢孟军：GoCN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#微服务-MicroServices"><span class="nav-number">1.5.2.</span> <span class="nav-text">微服务 MicroServices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gRPC"><span class="nav-number">1.5.3.</span> <span class="nav-text">gRPC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用gRPC-http打造微服务"><span class="nav-number">1.5.4.</span> <span class="nav-text">如何使用gRPC+http打造微服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么GO适合做微服务"><span class="nav-number">1.5.5.</span> <span class="nav-text">为什么GO适合做微服务</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LiuY</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
