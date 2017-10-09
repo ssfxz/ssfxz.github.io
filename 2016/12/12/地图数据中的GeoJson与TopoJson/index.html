@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="LiuY&#39;s TechBlog">
 <meta property="og:description" content="地图数据中的GeoJson与TopoJson 近期工作中遇到了图表库地图数据的合并以及压缩的需求，需要将目前图表库中目前使用的GeoJSON数据格式替换为TopoJSON，现在将GeoJSON与TopoJSON的异同进行整理如下。  地图图表是数据可视化中的一种常用的图表类型，主要用于表达基于地理位置的区域性数据。 目前常用于表示地理信息的数据结构主要有两种格式：GeoJSON 与 TopoJSO">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-08-05T18:11:25.000Z">
+<meta property="og:updated_time" content="2017-10-09T08:16:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="地图数据中的GeoJson与TopoJson">
 <meta name="twitter:description" content="地图数据中的GeoJson与TopoJson 近期工作中遇到了图表库地图数据的合并以及压缩的需求，需要将目前图表库中目前使用的GeoJSON数据格式替换为TopoJSON，现在将GeoJSON与TopoJSON的异同进行整理如下。  地图图表是数据可视化中的一种常用的图表类型，主要用于表达基于地理位置的区域性数据。 目前常用于表示地理信息的数据结构主要有两种格式：GeoJSON 与 TopoJSO">
@@ -394,7 +394,7 @@ TopoJSON主要通过以下方式减小文件的体积。
 
 介绍完GeoJSON与TopoJSON，来讲一讲我在工作中遇到的需求。
 
-![](20161212-地图数据中的GeoJson与TopoJson/1.png)
+![](地图数据中的GeoJson与TopoJson/1.png)
 如图所示：当选中了地图中的两个相连的区域时，区域公共边依然会显示出来，需求是连续的区域不显示公共边。但由于GeoJSON中的边缘信息时分别存储于每一个Geometry中，所以想要找到所有重叠的公共点有很高的时间复杂度，因此考虑将GeoJSON转换为TopoJSON处理。
 
 GeoJSON与TopoJSON的互相转换可以通过TopoJSON提供的转换器实现：
@@ -584,7 +584,7 @@ TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
