@@ -730,6 +730,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/14/MongoDB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiuY">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LiuY's TechBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/14/MongoDB/" itemprop="url">MongoDB</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-14T01:48:53+08:00">
+                2017-08-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="MongoDB-学习笔记"><a href="#MongoDB-学习笔记" class="headerlink" title="MongoDB 学习笔记"></a>MongoDB 学习笔记</h1><p>基于分布式文件存储的数据库</p>
+<p>MongoDB中数据的基本单元称为文档(Document)，它是MongoDB的核心概念，由多个键极其关联的值有序的放置在一起组成，数据库中它对应于关系型数据库的行。</p>
+<p>数据在MongoDB中以BSON（Binary-JSON）文档的格式存储在磁盘上。</p>
+<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><h3 id="增"><a href="#增" class="headerlink" title="增"></a>增</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.insert</span>(<span class="selector-tag">document</span>);</div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.insert</span>(<span class="selector-attr">[doc1, doc2, ...]</span>);</div><div class="line"></div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.person</span><span class="selector-class">.insert</span>(&#123;<span class="attribute">name</span>:<span class="string">"Liuy"</span>, age: <span class="number">27</span>&#125;);</div></pre></td></tr></table></figure>
+<h3 id="查"><a href="#查" class="headerlink" title="查"></a>查</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">show</span> <span class="selector-tag">collections</span></div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.find</span>();</div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.find</span>(<span class="selector-tag">criteria</span>,<span class="selector-tag">projection</span>);</div><div class="line"></div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.person</span><span class="selector-class">.find</span>(&#123;<span class="attribute">age</span>:&#123;$gt:<span class="number">18</span>&#125;&#125;,&#123;<span class="attribute">name</span>:<span class="number">1</span>&#125;)<span class="selector-class">.sort</span>(&#123;<span class="attribute">age</span>:<span class="number">1</span>&#125;)<span class="selector-class">.limit</span>(5);</div></pre></td></tr></table></figure>
+<ul>
+<li>criteria – 查询条件，文档类型，可选。</li>
+<li>projection– 返回的字段，文档类型，可选,若需返回所有字段，则忽略此参数。</li>
+</ul>
+<h3 id="改"><a href="#改" class="headerlink" title="改"></a>改</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">db.collection.update(query,update,&#123;<span class="string">upsert:</span><span class="keyword">boolean</span>,<span class="string">multi:</span><span class="keyword">boolean</span>&#125;);</div><div class="line">db.collection.save(document);</div><div class="line"></div><div class="line">db.person.update(&#123;<span class="string">age:</span>&#123;<span class="string">$gt:</span><span class="number">18</span>&#125;&#125;,&#123;<span class="string">$set:</span>&#123;<span class="string">status:</span><span class="string">"A"</span>&#125;&#125;,&#123;<span class="string">multi:</span><span class="literal">true</span>&#125;);</div><div class="line">db.person.save(&#123;<span class="string">name:</span><span class="string">"Tony"</span>,<span class="string">age:</span><span class="number">12</span>,<span class="string">gender:</span><span class="string">"man"</span>&#125;);</div></pre></td></tr></table></figure>
+<p>save命令可以<strong>更新</strong>或<strong>插入</strong>一个新文档</p>
+<ul>
+<li>query：查询条件，文档，和find中的查询条件写法一致。</li>
+<li>update：修改内容，文档。</li>
+<li>upsert(可选)：如果值为true，那么当集合中没有匹配文档时，创建文档。默认false。</li>
+<li>multi(可选)：如果值为true，那么将更新全部符合条件的文档，否则仅更新一个文档，默认false。</li>
+</ul>
+<h3 id="删"><a href="#删" class="headerlink" title="删"></a>删</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.remove</span>(<span class="selector-tag">query</span>,<span class="selector-tag">justOne</span>);</div><div class="line"></div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.person</span><span class="selector-class">.remove</span>(&#123;<span class="attribute">status</span>:<span class="string">"D"</span>&#125;);</div></pre></td></tr></table></figure>
+<ul>
+<li>query：BSON类型，删除文档的条件。</li>
+<li>justOne：布尔类型，true：只删除一个文档，false：默认值，删除所有符合条件的文档。</li>
+</ul>
+<h2 id="字段查询"><a href="#字段查询" class="headerlink" title="字段查询"></a>字段查询</h2><h3 id="相等条件"><a href="#相等条件" class="headerlink" title="相等条件"></a>相等条件</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">db</span><span class="selector-class">.person</span><span class="selector-class">.find</span>(&#123;<span class="attribute">status</span>:<span class="string">"A"</span>&#125;);</div></pre></td></tr></table></figure>
+<h3 id="比较条件"><a href="#比较条件" class="headerlink" title="比较条件"></a>比较条件</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">db</span><span class="selector-class">.person</span><span class="selector-class">.find</span>(&#123;<span class="attribute">age</span>:&#123;$gt:<span class="number">40</span>&#125;&#125;);</div></pre></td></tr></table></figure>
+<h3 id="数组条件"><a href="#数组条件" class="headerlink" title="数组条件"></a>数组条件</h3><blockquote>
+<p>当字段包含数组，可以进行数组完全匹配或匹配特定的值 </p>
+</blockquote>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 数组完全匹配</span></div><div class="line">db.inventory.<span class="built_in">find</span>( &#123; tags: [ <span class="string">'fruit'</span>, <span class="string">'food'</span>, <span class="string">'citrus'</span> ] &#125; );</div><div class="line"></div><div class="line"><span class="comment">// 单个元素匹配</span></div><div class="line">db.inventory.<span class="built_in">find</span>( &#123; tags: <span class="string">'fruit'</span> &#125; );</div><div class="line"></div><div class="line"><span class="comment">// 特定元素匹配  特定元素匹配需要"字段.索引"形式传入参数。</span></div><div class="line">db.inventory.<span class="built_in">find</span>( &#123; <span class="string">'tags.0'</span> : <span class="string">'fruit'</span> &#125; );</div></pre></td></tr></table></figure>
+<h3 id="子文档条件"><a href="#子文档条件" class="headerlink" title="子文档条件"></a>子文档条件</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.mycol.<span class="builtin-name">find</span>(&#123;<span class="string">"access.level"</span>:5&#125;);</div></pre></td></tr></table></figure>
+<h2 id="复合查询-AND-OR"><a href="#复合查询-AND-OR" class="headerlink" title="复合查询 AND/OR"></a>复合查询 AND/OR</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">db.collection.<span class="builtin-name">find</span>(&#123;<span class="variable">$and</span>:[doc1,doc2,<span class="built_in">..</span>.]&#125;)</div><div class="line">db.collection.<span class="builtin-name">find</span>(&#123;<span class="variable">$or</span>:[doc1,doc2,<span class="built_in">..</span>.]&#125;)</div><div class="line"></div><div class="line">db.person.<span class="builtin-name">find</span>(&#123;<span class="variable">$and</span>:[&#123;age:&#123;<span class="variable">$gt</span>:30&#125;&#125;,&#123;name:<span class="string">"Lucy"</span>&#125;]&#125;);</div><div class="line">db.person.<span class="builtin-name">find</span>(&#123;<span class="variable">$or</span>:[&#123;status:<span class="string">"A"</span>&#125;,&#123;age:30&#125;]&#125;);</div></pre></td></tr></table></figure>
+<h2 id="游标与结果集"><a href="#游标与结果集" class="headerlink" title="游标与结果集"></a>游标与结果集</h2><h3 id="cursor游标"><a href="#cursor游标" class="headerlink" title="cursor游标"></a>cursor游标</h3><blockquote>
+<p>find命令并不直接返回结果，而是返回一个结果集的迭代器，即游标。</p>
+</blockquote>
+<p>可以使用next方法来遍历游标</p>
+<figure class="highlight golo"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myCursor = db.inventory.<span class="keyword">find</span>( &#123; type: <span class="string">"food"</span> &#125; );</div><div class="line"><span class="keyword">var</span> myDocument = myCursor.hasNext() ? myCursor.next() : <span class="literal">null</span>;</div><div class="line"><span class="keyword">if</span> (myDocument) &#123;</div><div class="line">    <span class="keyword">var</span> myItem = myDocument.item;</div><div class="line">    <span class="keyword">print</span>(tojson(myItem));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用forEach方法也能实现游标的遍历<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myCursor =  <span class="keyword">db</span>.inventory.find( &#123; <span class="keyword">type</span>: <span class="string">"food"</span> &#125; );</div><div class="line">myCursor.<span class="keyword">forEach</span>(printjson);</div></pre></td></tr></table></figure></p>
+<h3 id="结果集"><a href="#结果集" class="headerlink" title="结果集"></a>结果集</h3><p>限制条件<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.find</span>()<span class="selector-class">.limit</span>(<span class="selector-tag">Num</span>)</div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.person</span><span class="selector-class">.find</span>(&#123;&#125;,&#123;<span class="attribute">name</span>:<span class="number">1</span>&#125;)</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/05/Gopher杭州Meetup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2724,10 +2880,10 @@ TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函�
 <figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (表达式<span class="number">1</span>) :  </div><div class="line">   <span class="keyword">if</span> (表达式<span class="number">2</span>) :  </div><div class="line">       语句<span class="number">1</span>  </div><div class="line">   elif (表达式<span class="number">3</span>) :  </div><div class="line">       语句<span class="number">2</span>  </div><div class="line">        …  </div><div class="line">   <span class="keyword">else</span>:  </div><div class="line">       语句<span class="number">3</span>  </div><div class="line"><span class="keyword">else</span> :  </div><div class="line">    …</div></pre></td></tr></table></figure>
 <figure class="highlight dart"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">num</span> = <span class="number">9</span></div><div class="line"><span class="keyword">if</span> <span class="built_in">num</span> &gt;= <span class="number">0</span> and <span class="built_in">num</span> &lt;= <span class="number">10</span>:    # 判断值是否在<span class="number">0</span>~<span class="number">10</span>之间</div><div class="line">    <span class="built_in">print</span> <span class="string">'HELLO'</span></div><div class="line">    <span class="keyword">if</span> <span class="built_in">num</span> &gt; <span class="number">10</span>:    # 判断值是否大于<span class="number">10</span></div><div class="line">       <span class="built_in">print</span> <span class="string">'world'</span></div><div class="line">    elif <span class="built_in">num</span>&gt;=<span class="number">0</span>:</div><div class="line">       <span class="built_in">print</span> <span class="string">'WORLD'</span></div><div class="line"><span class="keyword">else</span>:</div><div class="line">    <span class="built_in">print</span> <span class="string">'undefine'</span></div></pre></td></tr></table></figure>
 <h2 id="while语句"><a href="#while语句" class="headerlink" title="while语句"></a>while语句</h2><p>Python 编程中 while 语句用于循环执行程序，即在某条件下，循环执行某段程序，以处理需要重复处理的相同任务。其基本形式为：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> 判断条件：</div><div class="line">    执行语句……</div></pre></td></tr></table></figure>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> 判断条件：</div><div class="line">    执行语句……</div></pre></td></tr></table></figure>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">count</span> = <span class="number">0</span></div><div class="line"><span class="keyword">while</span> (<span class="built_in">count</span> &lt; <span class="number">9</span>):</div><div class="line">   <span class="built_in">print</span> '<span class="type">The</span> <span class="built_in">count</span> <span class="keyword">is</span>:', <span class="built_in">count</span></div><div class="line">   <span class="built_in">count</span> = <span class="built_in">count</span> + <span class="number">1</span></div><div class="line"> </div><div class="line"><span class="built_in">print</span> <span class="string">"Good bye!"</span></div></pre></td></tr></table></figure>
 <p>在 python 中，while … else 表示这样的意思，while 中的语句和普通的没有区别，<strong>else 中的语句会在循环正常执行完的情况下执行</strong>。其格式如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> 判断条件：</div><div class="line">      语句组</div><div class="line"><span class="keyword">else</span>:</div><div class="line">      语句组</div></pre></td></tr></table></figure>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> 判断条件：</div><div class="line">      语句组</div><div class="line"><span class="keyword">else</span>:</div><div class="line">      语句组</div></pre></td></tr></table></figure>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">count</span> = <span class="number">0</span></div><div class="line"><span class="keyword">while</span> <span class="keyword">count</span> &lt; <span class="number">5</span>:</div><div class="line">     <span class="keyword">print</span> <span class="keyword">count</span>, <span class="string">" is  less than 5"</span></div><div class="line">     <span class="keyword">count</span> = <span class="keyword">count</span> + <span class="number">1</span></div><div class="line"><span class="keyword">else</span>:</div><div class="line">     <span class="keyword">print</span> <span class="keyword">count</span>, <span class="string">" is not less than 5"</span></div></pre></td></tr></table></figure>
 <h2 id="for语句"><a href="#for语句" class="headerlink" title="for语句"></a>for语句</h2><p>Python for循环可以遍历任何序列的项目，如一个列表或者一个字符串。for循环的第一种语法格式如下：</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> iterating_var <span class="keyword">in</span> <span class="string">sequence:</span></div><div class="line">   statements(s)</div></pre></td></tr></table></figure>
@@ -3142,7 +3298,7 @@ TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

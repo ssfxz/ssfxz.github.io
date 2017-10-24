@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="MongoDB基于分布式文件存储的数据库 MongoDB中数据的基本单元称为文档(Document)，它是MongoDB的核心概念，由多个键极其关联的值有序的放置在一起组成，数据库中它对应于关系型数据库的行。 数据在MongoDB中以BSON（Binary-JSON）文档的格式存储在磁盘上。 基本操作增1234db.collection.insert(document);db.collection">
+<meta name="description" content="MongoDB 学习笔记基于分布式文件存储的数据库 MongoDB中数据的基本单元称为文档(Document)，它是MongoDB的核心概念，由多个键极其关联的值有序的放置在一起组成，数据库中它对应于关系型数据库的行。 数据在MongoDB中以BSON（Binary-JSON）文档的格式存储在磁盘上。 基本操作增1234db.collection.insert(document);db.colle">
 <meta name="keywords" content="MongoDB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MongoDB学习笔记">
-<meta property="og:url" content="http://yoursite.com/2017/08/30/MongoDB学习笔记/index.html">
+<meta property="og:title" content="MongoDB">
+<meta property="og:url" content="http://yoursite.com/2017/08/14/MongoDB/index.html">
 <meta property="og:site_name" content="LiuY&#39;s TechBlog">
-<meta property="og:description" content="MongoDB基于分布式文件存储的数据库 MongoDB中数据的基本单元称为文档(Document)，它是MongoDB的核心概念，由多个键极其关联的值有序的放置在一起组成，数据库中它对应于关系型数据库的行。 数据在MongoDB中以BSON（Binary-JSON）文档的格式存储在磁盘上。 基本操作增1234db.collection.insert(document);db.collection">
+<meta property="og:description" content="MongoDB 学习笔记基于分布式文件存储的数据库 MongoDB中数据的基本单元称为文档(Document)，它是MongoDB的核心概念，由多个键极其关联的值有序的放置在一起组成，数据库中它对应于关系型数据库的行。 数据在MongoDB中以BSON（Binary-JSON）文档的格式存储在磁盘上。 基本操作增1234db.collection.insert(document);db.colle">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-08-30T11:01:14.000Z">
+<meta property="og:updated_time" content="2017-10-24T17:50:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MongoDB学习笔记">
-<meta name="twitter:description" content="MongoDB基于分布式文件存储的数据库 MongoDB中数据的基本单元称为文档(Document)，它是MongoDB的核心概念，由多个键极其关联的值有序的放置在一起组成，数据库中它对应于关系型数据库的行。 数据在MongoDB中以BSON（Binary-JSON）文档的格式存储在磁盘上。 基本操作增1234db.collection.insert(document);db.collection">
+<meta name="twitter:title" content="MongoDB">
+<meta name="twitter:description" content="MongoDB 学习笔记基于分布式文件存储的数据库 MongoDB中数据的基本单元称为文档(Document)，它是MongoDB的核心概念，由多个键极其关联的值有序的放置在一起组成，数据库中它对应于关系型数据库的行。 数据在MongoDB中以BSON（Binary-JSON）文档的格式存储在磁盘上。 基本操作增1234db.collection.insert(document);db.colle">
 
 
 
@@ -134,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/30/MongoDB学习笔记/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/14/MongoDB/"/>
 
 
 
 
 
-  <title>MongoDB学习笔记 | LiuY's TechBlog</title>
+  <title>MongoDB | LiuY's TechBlog</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/30/MongoDB学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/14/MongoDB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LiuY">
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MongoDB学习笔记</h1>
+          <h1 class="post-title" itemprop="name headline">MongoDB</h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-30T18:59:36+08:00">
-                2017-08-30
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-14T01:48:53+08:00">
+                2017-08-14
               </time>
             
 
@@ -340,7 +340,7 @@
       
 
       
-        <h1 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h1><p>基于分布式文件存储的数据库</p>
+        <h1 id="MongoDB-学习笔记"><a href="#MongoDB-学习笔记" class="headerlink" title="MongoDB 学习笔记"></a>MongoDB 学习笔记</h1><p>基于分布式文件存储的数据库</p>
 <p>MongoDB中数据的基本单元称为文档(Document)，它是MongoDB的核心概念，由多个键极其关联的值有序的放置在一起组成，数据库中它对应于关系型数据库的行。</p>
 <p>数据在MongoDB中以BSON（Binary-JSON）文档的格式存储在磁盘上。</p>
 <h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><h3 id="增"><a href="#增" class="headerlink" title="增"></a>增</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.insert</span>(<span class="selector-tag">document</span>);</div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.collection</span><span class="selector-class">.insert</span>(<span class="selector-attr">[doc1, doc2, ...]</span>);</div><div class="line"></div><div class="line"><span class="selector-tag">db</span><span class="selector-class">.person</span><span class="selector-class">.insert</span>(&#123;<span class="attribute">name</span>:<span class="string">"Liuy"</span>, age: <span class="number">27</span>&#125;);</div></pre></td></tr></table></figure>
@@ -407,8 +407,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/14/MongoDB/" rel="next" title="MongoDB">
-                <i class="fa fa-chevron-left"></i> MongoDB
+              <a href="/2017/08/05/Gopher杭州Meetup/" rel="next" title="Gopher杭州Meetup">
+                <i class="fa fa-chevron-left"></i> Gopher杭州Meetup
               </a>
             
           </div>
@@ -417,8 +417,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/01/Clojure-Development-Environment/" rel="prev" title="Clojure Development Environment">
-                Clojure Development Environment <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08/30/MongoDB学习笔记/" rel="prev" title="MongoDB学习笔记">
+                MongoDB学习笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -544,7 +544,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MongoDB"><span class="nav-number">1.</span> <span class="nav-text">MongoDB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本操作"><span class="nav-number">1.1.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增"><span class="nav-number">1.1.1.</span> <span class="nav-text">增</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查"><span class="nav-number">1.1.2.</span> <span class="nav-text">查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改"><span class="nav-number">1.1.3.</span> <span class="nav-text">改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删"><span class="nav-number">1.1.4.</span> <span class="nav-text">删</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字段查询"><span class="nav-number">1.2.</span> <span class="nav-text">字段查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相等条件"><span class="nav-number">1.2.1.</span> <span class="nav-text">相等条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比较条件"><span class="nav-number">1.2.2.</span> <span class="nav-text">比较条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组条件"><span class="nav-number">1.2.3.</span> <span class="nav-text">数组条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子文档条件"><span class="nav-number">1.2.4.</span> <span class="nav-text">子文档条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复合查询-AND-OR"><span class="nav-number">1.3.</span> <span class="nav-text">复合查询 AND/OR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#游标与结果集"><span class="nav-number">1.4.</span> <span class="nav-text">游标与结果集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cursor游标"><span class="nav-number">1.4.1.</span> <span class="nav-text">cursor游标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果集"><span class="nav-number">1.4.2.</span> <span class="nav-text">结果集</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MongoDB-学习笔记"><span class="nav-number">1.</span> <span class="nav-text">MongoDB 学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本操作"><span class="nav-number">1.1.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增"><span class="nav-number">1.1.1.</span> <span class="nav-text">增</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查"><span class="nav-number">1.1.2.</span> <span class="nav-text">查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改"><span class="nav-number">1.1.3.</span> <span class="nav-text">改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删"><span class="nav-number">1.1.4.</span> <span class="nav-text">删</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字段查询"><span class="nav-number">1.2.</span> <span class="nav-text">字段查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相等条件"><span class="nav-number">1.2.1.</span> <span class="nav-text">相等条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比较条件"><span class="nav-number">1.2.2.</span> <span class="nav-text">比较条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组条件"><span class="nav-number">1.2.3.</span> <span class="nav-text">数组条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子文档条件"><span class="nav-number">1.2.4.</span> <span class="nav-text">子文档条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复合查询-AND-OR"><span class="nav-number">1.3.</span> <span class="nav-text">复合查询 AND/OR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#游标与结果集"><span class="nav-number">1.4.</span> <span class="nav-text">游标与结果集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cursor游标"><span class="nav-number">1.4.1.</span> <span class="nav-text">cursor游标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果集"><span class="nav-number">1.4.2.</span> <span class="nav-text">结果集</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
