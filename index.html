@@ -270,6 +270,144 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/02/OSM-Tile-Server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiuY">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LiuY's TechBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/02/OSM-Tile-Server/" itemprop="url">Debian8上搭建OpenStreetMap服务器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-02T10:40:28+08:00">
+                2018-03-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>近期的图表需求中强调了GIS地图的优先级，因此我们需要一个稳定且低成本的GIS地图服务器，对比高德和百度的商业合作解决方案后，我们决定使用开源地图OpenStreetMap。</p>
+<p>需要强调的是OpenStreetMap的地图数据是免费开源的，但它的地图服务不是，因此如果想使用OpenStreetMap的地图服务，有两个选择：选择付费的服务提供商（例如mapbox）或自己搭建地图服务器，考虑到服务器响应速度和地图的功能需求，最终决定我们自己动手搭建OpenStreetMap瓦片服务器。</p>
+<p>本文中使用的服务器操作系统为Debian8.8，部署过程需要root权限。</p>
+<h3 id="创建系统用户"><a href="#创建系统用户" class="headerlink" title="创建系统用户"></a>创建系统用户</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">sudo</span> -iu root</div><div class="line"><span class="keyword">adduser </span>youdata</div></pre></td></tr></table></figure>
+<h3 id="PostgreSQL-amp-Postgis"><a href="#PostgreSQL-amp-Postgis" class="headerlink" title="PostgreSQL &amp; Postgis"></a>PostgreSQL &amp; Postgis</h3><p>PostgreSQL用来存储地图数据，PostGIS是其地理空间插件，相比MySQL，PostgreSQL拥有更好的几何类型支持和空间数据库扩展。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># root用户安装PostgreSQL和插件</span></div><div class="line">sudo -iu root</div><div class="line">apt install postgresql-<span class="number">9.4</span>-postgis-<span class="number">2.1</span> postgresql-contrib-<span class="number">9.4</span></div><div class="line"></div><div class="line"><span class="comment"># 切换到postgres用户编辑数据库</span></div><div class="line">sudo -iu postgres</div><div class="line">cd ~</div><div class="line"></div><div class="line"><span class="comment"># 创建数据库用户</span></div><div class="line">createuser youdata</div><div class="line"></div><div class="line"><span class="comment"># 创建地图数据库</span></div><div class="line">createdb -E UTF8 -O youdata gis</div><div class="line"></div><div class="line"><span class="comment"># 为gis数据库增加hstore和postgis扩展</span></div><div class="line">psql</div><div class="line">\c gis</div><div class="line">CREATE EXTENSION postgis;</div><div class="line">CREATE EXTENSION hstore;</div><div class="line"><span class="comment"># Should answer CREATE EXTENSION</span></div><div class="line"><span class="keyword">exit</span></div></pre></td></tr></table></figure>
+<h3 id="osm2pgsql"><a href="#osm2pgsql" class="headerlink" title="osm2pgsql"></a>osm2pgsql</h3><p>osm2pgsql的作用是将OSM数据转换并导入PostGIS里的工具</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo -iu root</div><div class="line">apt <span class="keyword">install</span> osm2pgsql</div></pre></td></tr></table></figure>
+<h3 id="Stylesheet"><a href="#Stylesheet" class="headerlink" title="Stylesheet"></a>Stylesheet</h3><p>获取样式表</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">su youdata</div><div class="line">cd ~</div><div class="line">wget https:<span class="comment">//github.com/gravitystorm/openstreetmap-carto/archive/v2.29.1.tar.gz</span></div><div class="line">tar -xzf v2.<span class="number">29.1</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></div></pre></td></tr></table></figure>
+<h3 id="OSM-Data"><a href="#OSM-Data" class="headerlink" title="OSM Data"></a>OSM Data</h3><p>获取OSM的地图数据</p>
+<p><a href="http://download.geofabrik.de/index.html" target="_blank" rel="external">http://download.geofabrik.de/index.html</a><br><a href="http://planet.openstreetmap.org/pbf/" target="_blank" rel="external">http://planet.openstreetmap.org/pbf/</a></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">su</span> youdata</div><div class="line"><span class="keyword">cd</span> ~</div><div class="line">http:<span class="comment">//download.geofabrik.de/asia/china-latest.osm.pbf</span></div></pre></td></tr></table></figure>
+<h3 id="导入地图数据"><a href="#导入地图数据" class="headerlink" title="导入地图数据"></a>导入地图数据</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">su youdata</div><div class="line">cd ~</div><div class="line">osm2pgsql --slim -d gis -C <span class="number">6000</span> --hstore -S openstreetmap-carto-<span class="number">2.29</span>.<span class="number">1</span>/openstreetmap-carto<span class="selector-class">.style</span> china-latest<span class="selector-class">.osm</span><span class="selector-class">.pbf</span></div></pre></td></tr></table></figure>
+<h3 id="mod-tile"><a href="#mod-tile" class="headerlink" title="mod_tile"></a>mod_tile</h3><p>mod_tile是OSM的地图瓦片服务，没有Debian8的适配版本，需要从源码进行编译</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">su youdata</div><div class="line"><span class="keyword">cd</span> ~</div><div class="line">wget http<span class="variable">s:</span>//github.<span class="keyword">com</span>/openstreetmap/mod_tile/archive/<span class="number">6</span>c2cb243e4c8b047950ab8062cd66245f20a5d2f.tar.gz -O mod_tile.tar.gz</div><div class="line">tar -xzf mod_tile.tar.gz</div><div class="line">mv mod_tile-<span class="number">6</span>c2cb243e4c8b047950ab8062cd66245f20a5d2f mod_tile</div><div class="line"></div><div class="line">sudo -<span class="keyword">iu</span> root</div><div class="line">apt install autoconf libtool libmapnik-dev apache2-dev</div><div class="line"><span class="keyword">exit</span></div><div class="line"></div><div class="line"><span class="keyword">cd</span> mod_tile</div><div class="line">./autogen.<span class="keyword">sh</span></div><div class="line">./configure</div><div class="line"><span class="keyword">make</span></div><div class="line"></div><div class="line">sudo -<span class="keyword">iu</span> root</div><div class="line"><span class="keyword">cd</span> /home/youdata/mod_tile</div><div class="line"><span class="keyword">make</span> install</div><div class="line"><span class="keyword">make</span> install-mod_tile</div><div class="line"><span class="keyword">exit</span></div></pre></td></tr></table></figure>
+<h3 id="Mapnik"><a href="#Mapnik" class="headerlink" title="Mapnik"></a>Mapnik</h3><p>Mapnik用于地图渲染</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo -iu root</div><div class="line">apt install curl unzip gdal-bin mapnik-utils <span class="keyword">node</span><span class="title">-carto</span></div><div class="line"></div><div class="line">su youdata</div><div class="line">cd ~/openstreetmap-carto-<span class="number">2.29</span>.<span class="number">1</span>/</div><div class="line">./get-shapefiles.sh</div></pre></td></tr></table></figure>
+<p>参考资料：<br><a href="https://wiki.debian.org/OSM/tileserver/jessie#Install_mod_tile" target="_blank" rel="external">https://wiki.debian.org/OSM/tileserver/jessie#Install_mod_tile</a><br><a href="https://switch2osm.org/manually-building-a-tile-server-16-04-2-lts/" target="_blank" rel="external">https://switch2osm.org/manually-building-a-tile-server-16-04-2-lts/</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/05/JavaScript-memory-leak/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2860,10 +2998,10 @@ TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函�
 <figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (表达式<span class="number">1</span>) :  </div><div class="line">   <span class="keyword">if</span> (表达式<span class="number">2</span>) :  </div><div class="line">       语句<span class="number">1</span>  </div><div class="line">   elif (表达式<span class="number">3</span>) :  </div><div class="line">       语句<span class="number">2</span>  </div><div class="line">        …  </div><div class="line">   <span class="keyword">else</span>:  </div><div class="line">       语句<span class="number">3</span>  </div><div class="line"><span class="keyword">else</span> :  </div><div class="line">    …</div></pre></td></tr></table></figure>
 <figure class="highlight dart"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">num</span> = <span class="number">9</span></div><div class="line"><span class="keyword">if</span> <span class="built_in">num</span> &gt;= <span class="number">0</span> and <span class="built_in">num</span> &lt;= <span class="number">10</span>:    # 判断值是否在<span class="number">0</span>~<span class="number">10</span>之间</div><div class="line">    <span class="built_in">print</span> <span class="string">'HELLO'</span></div><div class="line">    <span class="keyword">if</span> <span class="built_in">num</span> &gt; <span class="number">10</span>:    # 判断值是否大于<span class="number">10</span></div><div class="line">       <span class="built_in">print</span> <span class="string">'world'</span></div><div class="line">    elif <span class="built_in">num</span>&gt;=<span class="number">0</span>:</div><div class="line">       <span class="built_in">print</span> <span class="string">'WORLD'</span></div><div class="line"><span class="keyword">else</span>:</div><div class="line">    <span class="built_in">print</span> <span class="string">'undefine'</span></div></pre></td></tr></table></figure>
 <h2 id="while语句"><a href="#while语句" class="headerlink" title="while语句"></a>while语句</h2><p>Python 编程中 while 语句用于循环执行程序，即在某条件下，循环执行某段程序，以处理需要重复处理的相同任务。其基本形式为：</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> 判断条件：</div><div class="line">    执行语句……</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> 判断条件：</div><div class="line">    执行语句……</div></pre></td></tr></table></figure>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">count</span> = <span class="number">0</span></div><div class="line"><span class="keyword">while</span> (<span class="built_in">count</span> &lt; <span class="number">9</span>):</div><div class="line">   <span class="built_in">print</span> '<span class="type">The</span> <span class="built_in">count</span> <span class="keyword">is</span>:', <span class="built_in">count</span></div><div class="line">   <span class="built_in">count</span> = <span class="built_in">count</span> + <span class="number">1</span></div><div class="line"> </div><div class="line"><span class="built_in">print</span> <span class="string">"Good bye!"</span></div></pre></td></tr></table></figure>
 <p>在 python 中，while … else 表示这样的意思，while 中的语句和普通的没有区别，<strong>else 中的语句会在循环正常执行完的情况下执行</strong>。其格式如下：</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> 判断条件：</div><div class="line">      语句组</div><div class="line"><span class="keyword">else</span>:</div><div class="line">      语句组</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> 判断条件：</div><div class="line">      语句组</div><div class="line"><span class="keyword">else</span>:</div><div class="line">      语句组</div></pre></td></tr></table></figure>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">count</span> = <span class="number">0</span></div><div class="line"><span class="keyword">while</span> <span class="keyword">count</span> &lt; <span class="number">5</span>:</div><div class="line">     <span class="keyword">print</span> <span class="keyword">count</span>, <span class="string">" is  less than 5"</span></div><div class="line">     <span class="keyword">count</span> = <span class="keyword">count</span> + <span class="number">1</span></div><div class="line"><span class="keyword">else</span>:</div><div class="line">     <span class="keyword">print</span> <span class="keyword">count</span>, <span class="string">" is not less than 5"</span></div></pre></td></tr></table></figure>
 <h2 id="for语句"><a href="#for语句" class="headerlink" title="for语句"></a>for语句</h2><p>Python for循环可以遍历任何序列的项目，如一个列表或者一个字符串。for循环的第一种语法格式如下：</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> iterating_var <span class="keyword">in</span> <span class="string">sequence:</span></div><div class="line">   statements(s)</div></pre></td></tr></table></figure>
@@ -2926,9 +3064,9 @@ TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函�
 <h2 id="from…import"><a href="#from…import" class="headerlink" title="from…import"></a>from…import</h2><p>Python的from语句让你从模块中导入一个指定的部分到当前命名空间中。语法如下：</p>
 <figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> modname <span class="keyword">import</span> name1[, name2[, ... nameN]]</div></pre></td></tr></table></figure>
 <p>例如，要导入模块fib的fibonacci函数，使用如下语句：</p>
-<figure class="highlight capnproto"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> fib <span class="keyword">import</span> fibonacci</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> fib <span class="keyword">import</span> fibonacci</div></pre></td></tr></table></figure>
 <h2 id="from…import-1"><a href="#from…import-1" class="headerlink" title="from…import*"></a>from…import*</h2><p>把一个模块的所有内容全都导入到当前的命名空间也是可行的，只需使用如下声明：</p>
-<figure class="highlight capnproto"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> modname <span class="keyword">import</span> *</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> modname <span class="keyword">import</span> *</div></pre></td></tr></table></figure>
 <p>这提供了一个简单的方法来导入一个模块中的所有项目。然而这种声明不该被过多地使用。</p>
 <h2 id="reload函数"><a href="#reload函数" class="headerlink" title="reload函数"></a>reload函数</h2><p>当一个模块被导入到一个脚本，模块顶层部分的代码只会被执行一次。因此，如果你想重新执行模块里顶层部分的代码，可以用reload()函数。该函数会重新导入之前导入过的模块。语法如下：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">reload</span><span class="params">(module_name)</span></span></div></pre></td></tr></table></figure>
@@ -3104,137 +3242,13 @@ TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/01/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LiuY">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LiuY's TechBlog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/01/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-01T00:00:00+08:00">
-                2016-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -3278,7 +3292,7 @@ TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -3291,7 +3305,7 @@ TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函�
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

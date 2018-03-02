@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OpenStreetMap," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="近期的图表需求中强调了GIS地图的优先级，因此我们需要一个稳定且低成本的GIS地图服务器，对比高德和百度的商业合作解决方案后，我们决定使用开源地图OpenStreetMap。 需要强调的是OpenStreetMap的地图数据是免费开源的，但它的地图服务不是，因此如果想使用OpenStreetMap的地图服务，有两个选择：选择付费的服务提供商（例如mapbox）或自己搭建地图服务器，考虑到服务器响应">
+<meta name="keywords" content="OpenStreetMap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debian8上搭建OpenStreetMap服务器">
+<meta property="og:url" content="http://yoursite.com/2018/03/02/OSM-Tile-Server/index.html">
+<meta property="og:site_name" content="LiuY&#39;s TechBlog">
+<meta property="og:description" content="近期的图表需求中强调了GIS地图的优先级，因此我们需要一个稳定且低成本的GIS地图服务器，对比高德和百度的商业合作解决方案后，我们决定使用开源地图OpenStreetMap。 需要强调的是OpenStreetMap的地图数据是免费开源的，但它的地图服务不是，因此如果想使用OpenStreetMap的地图服务，有两个选择：选择付费的服务提供商（例如mapbox）或自己搭建地图服务器，考虑到服务器响应">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-03-02T07:55:30.874Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Debian8上搭建OpenStreetMap服务器">
+<meta name="twitter:description" content="近期的图表需求中强调了GIS地图的优先级，因此我们需要一个稳定且低成本的GIS地图服务器，对比高德和百度的商业合作解决方案后，我们决定使用开源地图OpenStreetMap。 需要强调的是OpenStreetMap的地图数据是免费开源的，但它的地图服务不是，因此如果想使用OpenStreetMap的地图服务，有两个选择：选择付费的服务提供商（例如mapbox）或自己搭建地图服务器，考虑到服务器响应">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/02/OSM-Tile-Server/"/>
+
+
+
+
+
+  <title>Debian8上搭建OpenStreetMap服务器 | LiuY's TechBlog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LiuY's TechBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/02/OSM-Tile-Server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LiuY">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LiuY's TechBlog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Debian8上搭建OpenStreetMap服务器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-02T10:40:28+08:00">
+                2018-03-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>近期的图表需求中强调了GIS地图的优先级，因此我们需要一个稳定且低成本的GIS地图服务器，对比高德和百度的商业合作解决方案后，我们决定使用开源地图OpenStreetMap。</p>
+<p>需要强调的是OpenStreetMap的地图数据是免费开源的，但它的地图服务不是，因此如果想使用OpenStreetMap的地图服务，有两个选择：选择付费的服务提供商（例如mapbox）或自己搭建地图服务器，考虑到服务器响应速度和地图的功能需求，最终决定我们自己动手搭建OpenStreetMap瓦片服务器。</p>
+<p>本文中使用的服务器操作系统为Debian8.8，部署过程需要root权限。</p>
+<h3 id="创建系统用户"><a href="#创建系统用户" class="headerlink" title="创建系统用户"></a>创建系统用户</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">sudo</span> -iu root</div><div class="line"><span class="keyword">adduser </span>youdata</div></pre></td></tr></table></figure>
+<h3 id="PostgreSQL-amp-Postgis"><a href="#PostgreSQL-amp-Postgis" class="headerlink" title="PostgreSQL &amp; Postgis"></a>PostgreSQL &amp; Postgis</h3><p>PostgreSQL用来存储地图数据，PostGIS是其地理空间插件，相比MySQL，PostgreSQL拥有更好的几何类型支持和空间数据库扩展。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># root用户安装PostgreSQL和插件</span></div><div class="line">sudo -iu root</div><div class="line">apt install postgresql-<span class="number">9.4</span>-postgis-<span class="number">2.1</span> postgresql-contrib-<span class="number">9.4</span></div><div class="line"></div><div class="line"><span class="comment"># 切换到postgres用户编辑数据库</span></div><div class="line">sudo -iu postgres</div><div class="line">cd ~</div><div class="line"></div><div class="line"><span class="comment"># 创建数据库用户</span></div><div class="line">createuser youdata</div><div class="line"></div><div class="line"><span class="comment"># 创建地图数据库</span></div><div class="line">createdb -E UTF8 -O youdata gis</div><div class="line"></div><div class="line"><span class="comment"># 为gis数据库增加hstore和postgis扩展</span></div><div class="line">psql</div><div class="line">\c gis</div><div class="line">CREATE EXTENSION postgis;</div><div class="line">CREATE EXTENSION hstore;</div><div class="line"><span class="comment"># Should answer CREATE EXTENSION</span></div><div class="line"><span class="keyword">exit</span></div></pre></td></tr></table></figure>
+<h3 id="osm2pgsql"><a href="#osm2pgsql" class="headerlink" title="osm2pgsql"></a>osm2pgsql</h3><p>osm2pgsql的作用是将OSM数据转换并导入PostGIS里的工具</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo -iu root</div><div class="line">apt <span class="keyword">install</span> osm2pgsql</div></pre></td></tr></table></figure>
+<h3 id="Stylesheet"><a href="#Stylesheet" class="headerlink" title="Stylesheet"></a>Stylesheet</h3><p>获取样式表</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">su youdata</div><div class="line">cd ~</div><div class="line">wget https:<span class="comment">//github.com/gravitystorm/openstreetmap-carto/archive/v2.29.1.tar.gz</span></div><div class="line">tar -xzf v2.<span class="number">29.1</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></div></pre></td></tr></table></figure>
+<h3 id="OSM-Data"><a href="#OSM-Data" class="headerlink" title="OSM Data"></a>OSM Data</h3><p>获取OSM的地图数据</p>
+<p><a href="http://download.geofabrik.de/index.html" target="_blank" rel="external">http://download.geofabrik.de/index.html</a><br><a href="http://planet.openstreetmap.org/pbf/" target="_blank" rel="external">http://planet.openstreetmap.org/pbf/</a></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">su</span> youdata</div><div class="line"><span class="keyword">cd</span> ~</div><div class="line">http:<span class="comment">//download.geofabrik.de/asia/china-latest.osm.pbf</span></div></pre></td></tr></table></figure>
+<h3 id="导入地图数据"><a href="#导入地图数据" class="headerlink" title="导入地图数据"></a>导入地图数据</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">su youdata</div><div class="line">cd ~</div><div class="line">osm2pgsql --slim -d gis -C <span class="number">6000</span> --hstore -S openstreetmap-carto-<span class="number">2.29</span>.<span class="number">1</span>/openstreetmap-carto<span class="selector-class">.style</span> china-latest<span class="selector-class">.osm</span><span class="selector-class">.pbf</span></div></pre></td></tr></table></figure>
+<h3 id="mod-tile"><a href="#mod-tile" class="headerlink" title="mod_tile"></a>mod_tile</h3><p>mod_tile是OSM的地图瓦片服务，没有Debian8的适配版本，需要从源码进行编译</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">su youdata</div><div class="line"><span class="keyword">cd</span> ~</div><div class="line">wget http<span class="variable">s:</span>//github.<span class="keyword">com</span>/openstreetmap/mod_tile/archive/<span class="number">6</span>c2cb243e4c8b047950ab8062cd66245f20a5d2f.tar.gz -O mod_tile.tar.gz</div><div class="line">tar -xzf mod_tile.tar.gz</div><div class="line">mv mod_tile-<span class="number">6</span>c2cb243e4c8b047950ab8062cd66245f20a5d2f mod_tile</div><div class="line"></div><div class="line">sudo -<span class="keyword">iu</span> root</div><div class="line">apt install autoconf libtool libmapnik-dev apache2-dev</div><div class="line"><span class="keyword">exit</span></div><div class="line"></div><div class="line"><span class="keyword">cd</span> mod_tile</div><div class="line">./autogen.<span class="keyword">sh</span></div><div class="line">./configure</div><div class="line"><span class="keyword">make</span></div><div class="line"></div><div class="line">sudo -<span class="keyword">iu</span> root</div><div class="line"><span class="keyword">cd</span> /home/youdata/mod_tile</div><div class="line"><span class="keyword">make</span> install</div><div class="line"><span class="keyword">make</span> install-mod_tile</div><div class="line"><span class="keyword">exit</span></div></pre></td></tr></table></figure>
+<h3 id="Mapnik"><a href="#Mapnik" class="headerlink" title="Mapnik"></a>Mapnik</h3><p>Mapnik用于地图渲染</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo -iu root</div><div class="line">apt install curl unzip gdal-bin mapnik-utils <span class="keyword">node</span><span class="title">-carto</span></div><div class="line"></div><div class="line">su youdata</div><div class="line">cd ~/openstreetmap-carto-<span class="number">2.29</span>.<span class="number">1</span>/</div><div class="line">./get-shapefiles.sh</div></pre></td></tr></table></figure>
+<p>参考资料：<br><a href="https://wiki.debian.org/OSM/tileserver/jessie#Install_mod_tile" target="_blank" rel="external">https://wiki.debian.org/OSM/tileserver/jessie#Install_mod_tile</a><br><a href="https://switch2osm.org/manually-building-a-tile-server-16-04-2-lts/" target="_blank" rel="external">https://switch2osm.org/manually-building-a-tile-server-16-04-2-lts/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OpenStreetMap/" rel="tag"># OpenStreetMap</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/05/JavaScript-memory-leak/" rel="next" title="JavaScript memory leak">
+                <i class="fa fa-chevron-left"></i> JavaScript memory leak
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="LiuY" />
+          <p class="site-author-name" itemprop="name">LiuY</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建系统用户"><span class="nav-number">1.</span> <span class="nav-text">创建系统用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PostgreSQL-amp-Postgis"><span class="nav-number">2.</span> <span class="nav-text">PostgreSQL & Postgis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#osm2pgsql"><span class="nav-number">3.</span> <span class="nav-text">osm2pgsql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stylesheet"><span class="nav-number">4.</span> <span class="nav-text">Stylesheet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSM-Data"><span class="nav-number">5.</span> <span class="nav-text">OSM Data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入地图数据"><span class="nav-number">6.</span> <span class="nav-text">导入地图数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mod-tile"><span class="nav-number">7.</span> <span class="nav-text">mod_tile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mapnik"><span class="nav-number">8.</span> <span class="nav-text">Mapnik</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LiuY</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
