@@ -3092,9 +3092,9 @@ TopoJSON由于将公共边提取出来一同存储，并且还提供了merge函�
 <h2 id="from…import"><a href="#from…import" class="headerlink" title="from…import"></a>from…import</h2><p>Python的from语句让你从模块中导入一个指定的部分到当前命名空间中。语法如下：</p>
 <figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> modname <span class="keyword">import</span> name1[, name2[, ... nameN]]</div></pre></td></tr></table></figure>
 <p>例如，要导入模块fib的fibonacci函数，使用如下语句：</p>
-<figure class="highlight capnproto"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> fib <span class="keyword">import</span> fibonacci</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> fib <span class="keyword">import</span> fibonacci</div></pre></td></tr></table></figure>
 <h2 id="from…import-1"><a href="#from…import-1" class="headerlink" title="from…import*"></a>from…import*</h2><p>把一个模块的所有内容全都导入到当前的命名空间也是可行的，只需使用如下声明：</p>
-<figure class="highlight capnproto"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> modname <span class="keyword">import</span> *</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> modname <span class="keyword">import</span> *</div></pre></td></tr></table></figure>
 <p>这提供了一个简单的方法来导入一个模块中的所有项目。然而这种声明不该被过多地使用。</p>
 <h2 id="reload函数"><a href="#reload函数" class="headerlink" title="reload函数"></a>reload函数</h2><p>当一个模块被导入到一个脚本，模块顶层部分的代码只会被执行一次。因此，如果你想重新执行模块里顶层部分的代码，可以用reload()函数。该函数会重新导入之前导入过的模块。语法如下：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">reload</span><span class="params">(module_name)</span></span></div></pre></td></tr></table></figure>
